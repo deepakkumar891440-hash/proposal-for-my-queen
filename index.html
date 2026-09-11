@@ -10,7 +10,7 @@
     :root {
       --primary: #ff3366;
       --primary-hover: #e02456;
-      --card-bg: rgba(255, 255, 255, 0.88);
+      --card-bg: rgba(255, 255, 255, 0.90);
       --card-border: rgba(255, 255, 255, 0.95);
       --text-dark: #3a1c28;
       --text-muted: #7d6b73;
@@ -67,7 +67,7 @@
       }
     }
 
-    /* White & Pink Glass Card */
+    /* Glass Card */
     .card {
       position: relative;
       z-index: 1;
@@ -229,7 +229,7 @@
       font-size: 20px;
     }
 
-    /* Pink Time Selector */
+    /* Time Selector */
     .time-selector-box {
       background: #ffffff;
       border: 1.5px solid #ffe5ec;
@@ -294,9 +294,9 @@
     }
 
     .auto-notice {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-muted);
-      margin-top: 10px;
+      margin-top: 14px;
       animation: pulseText 1.5s infinite;
     }
 
@@ -315,11 +315,11 @@
   <!-- Floating Hearts Background -->
   <div class="heart-bg" id="heartBg"></div>
 
-  <!-- Screen 1: Proposal -->
+  <!-- Screen 1: Proposal Gate -->
   <div class="card" id="proposalGate">
     <div class="pill">🌸 Exclusive Invitation</div>
     <h1>Will You Go On A Date With Me?</h1>
-    <p class="subtitle">I've planned something very special, but it's incomplete without you.</p>
+    <p class="subtitle">I have planned something special, but it is incomplete without you.</p>
 
     <div class="btn-row">
       <button class="btn-action btn-yes" id="yesBtn" onclick="startQuestions()">Yes, absolutely! 💖</button>
@@ -327,7 +327,7 @@
     </div>
   </div>
 
-  <!-- Screen 2: 3 Simple Questions -->
+  <!-- Screen 2: 3 Questions -->
   <div class="card hidden" id="questionGate">
     <div class="progress-wrap">
       <div class="progress-bar" id="progressBar"></div>
@@ -338,27 +338,27 @@
     <div id="contentBox"></div>
   </div>
 
-  <!-- Screen 3: Date Confirmed & Auto WhatsApp -->
+  <!-- Screen 3: Date Confirmed & Send To WhatsApp -->
   <div class="card hidden" id="finalGate">
     <div class="pill">💌 Date Confirmed</div>
-    <h1>It's A Match! 🎉❤️</h1>
-    <p class="subtitle">Here are all your choices for our date:</p>
+    <h1>I am Ready to Go! 🎉❤️</h1>
+    <p class="subtitle">Here are the final choices selected for our date:</p>
 
     <div class="summary-card" id="summaryView"></div>
 
     <button class="btn-action btn-yes" style="width: 100%;" onclick="sendWhatsAppNotification()">
-      Confirm with Me on WhatsApp 💬
+      Send Confirmation on WhatsApp 💬
     </button>
-    <p class="auto-notice" id="autoRedirectMsg">Opening WhatsApp automatically in a second... 🚀</p>
+    <p class="auto-notice" id="autoRedirectMsg">Redirecting to WhatsApp to send confirmation... 🚀</p>
   </div>
 
   <script>
     // ================= CONFIGURATION =================
-    // Yahan apna 10-digit mobile number country code ke sath daalein (Bina '+' sign ke)
+    // Yahan apna 10-digit WhatsApp number dalein country code ke sath (Bina '+' sign ke)
     const YOUR_PHONE_NUMBER = "91XXXXXXXXXX"; 
     // =================================================
 
-    // Continuous Floating Pink Hearts
+    // Continuous Floating Hearts
     const heartBg = document.getElementById('heartBg');
     const hearts = ['💖', '💕', '💗', '🌸', '✨', '💓'];
 
@@ -396,7 +396,7 @@
       },
       {
         type: "time",
-        title: "What exact time should I pick you up?",
+        title: "What time should we meet?",
         subtitle: "Select the exact time:"
       },
       {
@@ -467,7 +467,7 @@
       const formattedHour = hourNum % 12 || 12;
       const formattedTime = `${String(formattedHour).padStart(2, '0')}:${m} ${ampm}`;
 
-      recordAnswer("Pick-up Time", formattedTime);
+      recordAnswer("Meeting Time", formattedTime);
     }
 
     function recordAnswer(question, choice) {
@@ -497,14 +497,16 @@
         summaryView.appendChild(row);
       });
 
-      // 1.5 Second me WhatsApp auto-open ho jayega
+      // 1.2 second baad automatic WhatsApp open ho jayega
       setTimeout(() => {
         sendWhatsAppNotification();
-      }, 1500);
+      }, 1200);
     }
 
     function sendWhatsAppNotification() {
-      const text = `Hey! I said YES! 🥰✨%0A%0AHere are my plans for our date:%0A📍 *Place:* ${answers[0]?.choice}%0A⏰ *Pick-up Time:* ${answers[1]?.choice}%0A🍕 *Food:* ${answers[2]?.choice}%0A%0ASee you at ${answers[1]?.choice}! 💖`;
+      // English text jo uske number se aapke number par send hoga
+      const text = `Hey! I am ready to go on a date with you! 🥰✨%0A%0AHere are my choices:%0A📍 Location: ${answers[0]?.choice}%0A⏰ Time: ${answers[1]?.choice}%0A🍕 Food: ${answers[2]?.choice}%0A%0ACan't wait to see you! 💖`;
+      
       window.location.href = `https://wa.me/${YOUR_PHONE_NUMBER}?text=${text}`;
     }
   </script>

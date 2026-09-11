@@ -8,13 +8,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #ff1e56;
-      --accent: #9d4edd;
-      --bg-dark: #0f0c1b;
-      --card-bg: rgba(22, 16, 38, 0.75);
-      --border-glow: rgba(255, 255, 255, 0.18);
-      --text-main: #ffffff;
-      --text-dim: #b8b0c8;
+      --primary: #ff3366;
+      --primary-hover: #e02456;
+      --card-bg: rgba(255, 255, 255, 0.88);
+      --card-border: rgba(255, 255, 255, 0.95);
+      --text-dark: #3a1c28;
+      --text-muted: #7d6b73;
     }
 
     * {
@@ -26,11 +25,7 @@
 
     body {
       min-height: 100vh;
-      background-color: var(--bg-dark);
-      background-image: 
-        radial-gradient(at 15% 15%, rgba(255, 30, 86, 0.35) 0px, transparent 50%),
-        radial-gradient(at 85% 85%, rgba(157, 78, 221, 0.4) 0px, transparent 50%),
-        radial-gradient(at 50% 50%, rgba(255, 107, 107, 0.15) 0px, transparent 55%);
+      background: linear-gradient(135deg, #ffeef2 0%, #ffd6e0 45%, #ffc2d1 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -39,45 +34,58 @@
       padding: 20px;
     }
 
-    .sparkle-field {
+    /* Floating Hearts Layer */
+    .heart-bg {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
+      overflow: hidden;
     }
 
-    .sparkle {
+    .floating-heart {
       position: absolute;
-      bottom: -30px;
-      animation: drift 8s linear infinite;
+      bottom: -40px;
+      animation: floatUpward 7s linear infinite;
       user-select: none;
-      opacity: 0.65;
     }
 
-    @keyframes drift {
-      0% { transform: translateY(0) scale(0.6); opacity: 0; }
-      30% { opacity: 0.8; }
-      100% { transform: translateY(-110vh) scale(1.2) rotate(360deg); opacity: 0; }
+    @keyframes floatUpward {
+      0% {
+        transform: translateY(0) scale(0.6) rotate(0deg);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.85;
+      }
+      80% {
+        opacity: 0.85;
+      }
+      100% {
+        transform: translateY(-115vh) scale(1.2) rotate(360deg);
+        opacity: 0;
+      }
     }
 
+    /* White & Pink Glass Card */
     .card {
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 460px;
+      max-width: 450px;
       background: var(--card-bg);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid var(--border-glow);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid var(--card-border);
       border-radius: 36px;
-      padding: 40px 30px;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45), 0 0 35px rgba(255, 30, 86, 0.2);
+      padding: 38px 28px;
+      box-shadow: 0 25px 50px rgba(255, 51, 102, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
       text-align: center;
       animation: popIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     @keyframes popIn {
-      from { opacity: 0; transform: scale(0.94) translateY(20px); }
+      from { opacity: 0; transform: scale(0.95) translateY(20px); }
       to { opacity: 1; transform: scale(1) translateY(0); }
     }
 
@@ -85,33 +93,34 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 14px;
+      padding: 6px 16px;
       border-radius: 50px;
-      background: rgba(255, 30, 86, 0.15);
-      border: 1px solid rgba(255, 30, 86, 0.3);
-      color: #ff6b8b;
+      background: #ffe5ec;
+      border: 1px solid #ffccd5;
+      color: var(--primary);
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 32px;
-      color: var(--text-main);
-      margin-bottom: 12px;
+      font-size: 30px;
+      color: var(--text-dark);
+      margin-bottom: 10px;
       line-height: 1.25;
     }
 
     p.subtitle {
-      color: var(--text-dim);
+      color: var(--text-muted);
       font-size: 15px;
       line-height: 1.6;
-      margin-bottom: 28px;
+      margin-bottom: 26px;
     }
 
+    /* Buttons */
     .btn-row {
       display: flex;
       justify-content: center;
@@ -122,46 +131,46 @@
     }
 
     .btn-action {
-      padding: 15px 36px;
-      border-radius: 22px;
+      padding: 14px 34px;
+      border-radius: 50px;
       font-size: 16px;
       font-weight: 700;
       border: none;
       cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .btn-yes {
-      background: linear-gradient(135deg, #ff1e56 0%, #9d4edd 100%);
+      background: linear-gradient(135deg, #ff3366 0%, #ff5e7e 100%);
       color: #ffffff;
-      box-shadow: 0 10px 25px rgba(255, 30, 86, 0.45);
+      box-shadow: 0 10px 25px rgba(255, 51, 102, 0.35);
     }
 
     .btn-yes:hover {
       transform: scale(1.05);
-      box-shadow: 0 14px 32px rgba(255, 30, 86, 0.6);
+      box-shadow: 0 14px 30px rgba(255, 51, 102, 0.45);
     }
 
     .btn-no {
-      background: rgba(255, 255, 255, 0.08);
-      color: #bbb;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(8px);
+      background: #ffffff;
+      color: var(--text-muted);
+      border: 1.5px solid #ffccd5;
     }
 
+    /* Progress Track */
     .progress-wrap {
       width: 100%;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.08);
+      height: 7px;
+      background: #ffe5ec;
       border-radius: 10px;
       overflow: hidden;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .progress-bar {
       height: 100%;
       width: 33.33%;
-      background: linear-gradient(90deg, #ff1e56, #9d4edd);
+      background: linear-gradient(90deg, #ff758c, #ff3366);
       border-radius: 10px;
       transition: width 0.35s ease;
     }
@@ -169,22 +178,23 @@
     .step-tag {
       font-size: 12px;
       font-weight: 700;
-      color: #ff6b8b;
+      color: var(--primary);
       letter-spacing: 1px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .q-title {
       font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      color: var(--text-main);
-      margin-bottom: 24px;
-      min-height: 55px;
+      font-size: 21px;
+      color: var(--text-dark);
+      margin-bottom: 22px;
+      min-height: 50px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
+    /* Options List */
     .options-list {
       display: flex;
       flex-direction: column;
@@ -192,75 +202,71 @@
     }
 
     .option-card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 16px 20px;
+      background: #ffffff;
+      border: 1.5px solid #ffe5ec;
+      padding: 15px 20px;
       border-radius: 20px;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 14px;
       font-size: 15px;
-      font-weight: 500;
-      color: #e5e0f0;
+      font-weight: 600;
+      color: var(--text-dark);
       text-align: left;
+      box-shadow: 0 4px 12px rgba(255, 107, 129, 0.06);
       transition: all 0.25s ease;
     }
 
     .option-card:hover {
-      background: rgba(255, 30, 86, 0.15);
-      border-color: rgba(255, 30, 86, 0.5);
-      transform: translateX(4px);
-      color: #ffffff;
+      background: #fff0f3;
+      border-color: var(--primary);
+      transform: translateX(5px);
+      color: var(--primary);
     }
 
     .option-icon {
       font-size: 20px;
     }
 
-    /* Custom Time Picker Module */
+    /* Pink Time Selector */
     .time-selector-box {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #ffffff;
+      border: 1.5px solid #ffe5ec;
       border-radius: 24px;
       padding: 24px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
+      box-shadow: 0 4px 14px rgba(255, 107, 129, 0.08);
     }
 
     .time-input {
       width: 100%;
-      background: rgba(15, 12, 27, 0.85);
-      border: 1.5px solid rgba(255, 30, 86, 0.5);
-      color: #ffffff;
-      font-size: 24px;
+      background: #fff0f3;
+      border: 2px solid #ffccd5;
+      color: var(--primary);
+      font-size: 26px;
       font-weight: 700;
       text-align: center;
-      padding: 14px;
+      padding: 12px;
       border-radius: 16px;
       outline: none;
       cursor: pointer;
     }
 
-    .time-input::-webkit-calendar-picker-indicator {
-      filter: invert(1);
-      cursor: pointer;
-      transform: scale(1.3);
-      margin-right: 6px;
-    }
-
+    /* Summary Card */
     .summary-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px dashed rgba(255, 255, 255, 0.2);
+      background: #ffffff;
+      border: 1.5px dashed #ffb3c1;
       border-radius: 20px;
       padding: 16px;
       margin: 20px 0;
       text-align: left;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .summary-line {
@@ -269,7 +275,7 @@
       align-items: center;
       font-size: 14px;
       padding-bottom: 8px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid #ffe5ec;
     }
 
     .summary-line:last-child {
@@ -278,12 +284,25 @@
     }
 
     .summary-line .q-key {
-      color: var(--text-dim);
+      color: var(--text-muted);
+      font-weight: 500;
     }
 
     .summary-line .q-val {
-      color: #ff6b8b;
+      color: var(--primary);
       font-weight: 700;
+    }
+
+    .auto-notice {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 10px;
+      animation: pulseText 1.5s infinite;
+    }
+
+    @keyframes pulseText {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
     }
 
     .hidden {
@@ -293,13 +312,14 @@
 </head>
 <body>
 
-  <div class="sparkle-field" id="sparkleField"></div>
+  <!-- Floating Hearts Background -->
+  <div class="heart-bg" id="heartBg"></div>
 
   <!-- Screen 1: Proposal -->
   <div class="card" id="proposalGate">
-    <div class="pill">✨ Exclusive Invitation</div>
+    <div class="pill">🌸 Exclusive Invitation</div>
     <h1>Will You Go On A Date With Me?</h1>
-    <p class="subtitle">I've got something special in mind, but it only works if you're there.</p>
+    <p class="subtitle">I've planned something very special, but it's incomplete without you.</p>
 
     <div class="btn-row">
       <button class="btn-action btn-yes" id="yesBtn" onclick="startQuestions()">Yes, absolutely! 💖</button>
@@ -307,7 +327,7 @@
     </div>
   </div>
 
-  <!-- Screen 2: Dynamic Questions -->
+  <!-- Screen 2: 3 Simple Questions -->
   <div class="card hidden" id="questionGate">
     <div class="progress-wrap">
       <div class="progress-bar" id="progressBar"></div>
@@ -318,44 +338,43 @@
     <div id="contentBox"></div>
   </div>
 
-  <!-- Screen 3: Final Confirmation & Notification -->
+  <!-- Screen 3: Date Confirmed & Auto WhatsApp -->
   <div class="card hidden" id="finalGate">
-    <div class="pill">💌 Date Locked In</div>
-    <h1>It's A Date! 🎉</h1>
-    <p class="subtitle">Here are your selected details:</p>
+    <div class="pill">💌 Date Confirmed</div>
+    <h1>It's A Match! 🎉❤️</h1>
+    <p class="subtitle">Here are all your choices for our date:</p>
 
     <div class="summary-card" id="summaryView"></div>
 
-    <button class="btn-action btn-yes" style="width: 100%; margin-top: 10px;" onclick="sendWhatsAppNotification()">
-      Confirm via WhatsApp 💬
+    <button class="btn-action btn-yes" style="width: 100%;" onclick="sendWhatsAppNotification()">
+      Confirm with Me on WhatsApp 💬
     </button>
-    <p style="font-size: 12px; color: var(--text-dim); margin-top: 12px;">Click to let me know the exact time and choices!</p>
+    <p class="auto-notice" id="autoRedirectMsg">Opening WhatsApp automatically in a second... 🚀</p>
   </div>
 
   <script>
     // ================= CONFIGURATION =================
-    // Apna 10-digit mobile number country code ke sath likhein (bina '+' ke)
+    // Yahan apna 10-digit mobile number country code ke sath daalein (Bina '+' sign ke)
     const YOUR_PHONE_NUMBER = "91XXXXXXXXXX"; 
-
-    // Optional: Silent email alert ke liye (e.g. "https://formspree.io/f/xyzabced")
-    const FORMSPREE_ENDPOINT = "";
     // =================================================
 
-    const sparkleField = document.getElementById('sparkleField');
-    const icons = ['✨', '🌸', '💫', '💖', '🤍'];
+    // Continuous Floating Pink Hearts
+    const heartBg = document.getElementById('heartBg');
+    const hearts = ['💖', '💕', '💗', '🌸', '✨', '💓'];
 
-    function createSparkle() {
-      const sp = document.createElement('span');
-      sp.className = 'sparkle';
-      sp.innerText = icons[Math.floor(Math.random() * icons.length)];
-      sp.style.left = Math.random() * 100 + 'vw';
-      sp.style.fontSize = (Math.random() * 12 + 14) + 'px';
-      sp.style.animationDuration = (Math.random() * 3 + 5) + 's';
-      sparkleField.appendChild(sp);
-      setTimeout(() => sp.remove(), 7500);
+    function spawnHeart() {
+      const el = document.createElement('span');
+      el.className = 'floating-heart';
+      el.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.fontSize = (Math.random() * 14 + 16) + 'px';
+      el.style.animationDuration = (Math.random() * 3 + 5) + 's';
+      heartBg.appendChild(el);
+      setTimeout(() => el.remove(), 7500);
     }
-    setInterval(createSparkle, 350);
+    setInterval(spawnHeart, 320);
 
+    // Playful "No" Dodge
     const noBtn = document.getElementById('noBtn');
     function dodgeNo() {
       const offsetX = (Math.random() - 0.5) * 140;
@@ -363,6 +382,7 @@
       noBtn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
     }
 
+    // 3 Exact English Questions
     const questions = [
       {
         type: "choice",
@@ -377,7 +397,7 @@
       {
         type: "time",
         title: "What exact time should I pick you up?",
-        subtitle: "Pick the exact hour & minute that fits your schedule:"
+        subtitle: "Select the exact time:"
       },
       {
         type: "choice",
@@ -395,7 +415,7 @@
     const answers = [];
 
     function startQuestions() {
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+      confetti({ particleCount: 110, spread: 70, origin: { y: 0.6 } });
       document.getElementById('proposalGate').classList.add('hidden');
       document.getElementById('questionGate').classList.remove('hidden');
       renderCurrentQuestion();
@@ -437,11 +457,10 @@
     function confirmTimeSelection() {
       const rawTime = document.getElementById('exactTimeInput').value;
       if (!rawTime) {
-        alert("Please pick a time!");
+        alert("Please select a time!");
         return;
       }
       
-      // Convert 24-hour to readable 12-hour AM/PM format
       const [h, m] = rawTime.split(':');
       const hourNum = parseInt(h, 10);
       const ampm = hourNum >= 12 ? 'PM' : 'AM';
@@ -466,7 +485,7 @@
       document.getElementById('questionGate').classList.add('hidden');
       document.getElementById('finalGate').classList.remove('hidden');
 
-      confetti({ particleCount: 150, spread: 90, origin: { y: 0.55 } });
+      confetti({ particleCount: 160, spread: 90, origin: { y: 0.55 } });
 
       const summaryView = document.getElementById('summaryView');
       summaryView.innerHTML = '';
@@ -478,24 +497,15 @@
         summaryView.appendChild(row);
       });
 
-      if (FORMSPREE_ENDPOINT) {
-        fetch(FORMSPREE_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            event: "Proposal Accepted! 🎉",
-            location: answers[0]?.choice,
-            exact_time: answers[1]?.choice,
-            food: answers[2]?.choice,
-            submitted_at: new Date().toLocaleString()
-          })
-        }).catch(err => console.log(err));
-      }
+      // 1.5 Second me WhatsApp auto-open ho jayega
+      setTimeout(() => {
+        sendWhatsAppNotification();
+      }, 1500);
     }
 
     function sendWhatsAppNotification() {
       const text = `Hey! I said YES! 🥰✨%0A%0AHere are my plans for our date:%0A📍 *Place:* ${answers[0]?.choice}%0A⏰ *Pick-up Time:* ${answers[1]?.choice}%0A🍕 *Food:* ${answers[2]?.choice}%0A%0ASee you at ${answers[1]?.choice}! 💖`;
-      window.open(`https://wa.me/${YOUR_PHONE_NUMBER}?text=${text}`, '_blank');
+      window.location.href = `https://wa.me/${YOUR_PHONE_NUMBER}?text=${text}`;
     }
   </script>
 </body>

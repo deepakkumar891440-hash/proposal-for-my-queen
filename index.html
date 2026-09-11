@@ -8,12 +8,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #ff3366;
-      --primary-hover: #e02456;
-      --card-bg: rgba(255, 255, 255, 0.90);
-      --card-border: rgba(255, 255, 255, 0.95);
-      --text-dark: #3a1c28;
-      --text-muted: #7d6b73;
+      --primary: #ff1e56;
+      --primary-glow: rgba(255, 30, 86, 0.45);
+      --heart-bg: linear-gradient(145deg, #ffffff 0%, #fff0f5 55%, #ffe1ea 100%);
+      --text-dark: #3a1020;
+      --text-muted: #825f6e;
     }
 
     * {
@@ -21,288 +20,251 @@
       margin: 0;
       padding: 0;
       font-family: 'Outfit', sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
       min-height: 100vh;
-      background: linear-gradient(135deg, #ffeef2 0%, #ffd6e0 45%, #ffc2d1 100%);
+      background: radial-gradient(circle at 50% 30%, #ffe3ec 0%, #ffc2d4 50%, #ff9ebb 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow-x: hidden;
       position: relative;
-      padding: 20px;
+      padding: 16px;
     }
 
-    /* Floating Hearts Layer */
-    .heart-bg {
+    /* Ambient Floating Particle Layer */
+    .sky-hearts {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      overflow: hidden;
     }
 
-    .floating-heart {
+    .drifting-heart {
       position: absolute;
       bottom: -40px;
-      animation: floatUpward 7s linear infinite;
+      animation: floatUp 6s linear infinite;
       user-select: none;
     }
 
-    @keyframes floatUpward {
-      0% {
-        transform: translateY(0) scale(0.6) rotate(0deg);
-        opacity: 0;
-      }
-      20% {
-        opacity: 0.85;
-      }
-      80% {
-        opacity: 0.85;
-      }
-      100% {
-        transform: translateY(-115vh) scale(1.2) rotate(360deg);
-        opacity: 0;
-      }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(0.6) rotate(0deg); opacity: 0; }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.8; }
+      100% { transform: translateY(-115vh) scale(1.3) rotate(360deg); opacity: 0; }
     }
 
-    /* Glass Card */
-    .card {
+    /* Outer Container */
+    .heart-stage {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       width: 100%;
-      max-width: 450px;
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 2px solid var(--card-border);
-      border-radius: 36px;
-      padding: 38px 28px;
-      box-shadow: 0 25px 50px rgba(255, 51, 102, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+      max-width: 440px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 520px;
+    }
+
+    /* SVG Heart Canvas Mask */
+    .heart-frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      filter: drop-shadow(0 20px 35px rgba(255, 30, 86, 0.35)) drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
+      animation: heartbeat 2.8s infinite ease-in-out;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    /* Content Box Inside Heart */
+    .inner-content {
+      position: relative;
+      z-index: 3;
+      width: 82%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
-      animation: popIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 30px 10px 45px 10px;
     }
 
-    @keyframes popIn {
-      from { opacity: 0; transform: scale(0.95) translateY(20px); }
-      to { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    .pill {
+    .pill-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 6px 16px;
+      gap: 5px;
+      padding: 5px 14px;
       border-radius: 50px;
-      background: #ffe5ec;
-      border: 1px solid #ffccd5;
+      background: #ffe3ec;
+      border: 1px solid #ffb8cf;
       color: var(--primary);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
       text-transform: uppercase;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 30px;
+      font-size: 26px;
+      font-weight: 700;
       color: var(--text-dark);
-      margin-bottom: 10px;
       line-height: 1.25;
+      margin-bottom: 8px;
     }
 
-    p.subtitle {
+    p.lead-text {
       color: var(--text-muted);
-      font-size: 15px;
-      line-height: 1.6;
-      margin-bottom: 26px;
+      font-size: 13.5px;
+      line-height: 1.5;
+      margin-bottom: 22px;
+      padding: 0 8px;
     }
 
-    /* Buttons */
-    .btn-row {
+    /* Action Buttons */
+    .btn-lane {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 16px;
+      width: 100%;
+      min-height: 55px;
       position: relative;
-      min-height: 60px;
     }
 
-    .btn-action {
-      padding: 14px 34px;
+    .btn-choice {
+      padding: 13px 26px;
       border-radius: 50px;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       border: none;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .btn-yes {
-      background: linear-gradient(135deg, #ff3366 0%, #ff5e7e 100%);
-      color: #ffffff;
-      box-shadow: 0 10px 25px rgba(255, 51, 102, 0.35);
+      background: linear-gradient(135deg, #ff1e56, #ff6584);
+      color: #fff;
+      box-shadow: 0 10px 22px var(--primary-glow);
     }
 
-    .btn-yes:hover {
-      transform: scale(1.05);
-      box-shadow: 0 14px 30px rgba(255, 51, 102, 0.45);
+    .btn-yes:active {
+      transform: scale(0.96);
     }
 
     .btn-no {
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.95);
       color: var(--text-muted);
-      border: 1.5px solid #ffccd5;
+      border: 1.5px solid #ffccd8;
     }
 
-    /* Progress Track */
-    .progress-wrap {
+    /* Crazy Options Styling */
+    .crazy-options {
       width: 100%;
-      height: 7px;
-      background: #ffe5ec;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      max-height: 250px;
+      overflow-y: auto;
+      padding: 2px;
     }
 
-    .progress-bar {
-      height: 100%;
-      width: 33.33%;
-      background: linear-gradient(90deg, #ff758c, #ff3366);
-      border-radius: 10px;
-      transition: width 0.35s ease;
-    }
-
-    .step-tag {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--primary);
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-    }
-
-    .q-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 21px;
-      color: var(--text-dark);
-      margin-bottom: 22px;
-      min-height: 50px;
+    .crazy-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1.5px solid #ffccd9;
+      padding: 12px 16px;
+      border-radius: 18px;
       display: flex;
       align-items: center;
-      justify-content: center;
+      gap: 12px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-dark);
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 0 4px 12px rgba(255, 51, 102, 0.07);
+      transition: all 0.22s ease;
     }
 
-    /* Options List */
-    .options-list {
+    .crazy-card:hover, .crazy-card:active {
+      background: #ff1e56;
+      border-color: #ff1e56;
+      color: #ffffff;
+      transform: scale(1.02) translateX(4px);
+      box-shadow: 0 8px 18px rgba(255, 30, 86, 0.35);
+    }
+
+    .crazy-card .emoji {
+      font-size: 20px;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    }
+
+    /* Time Selector */
+    .time-deck {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.5px solid #ffccd9;
+      border-radius: 20px;
+      padding: 18px;
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    .option-card {
-      background: #ffffff;
-      border: 1.5px solid #ffe5ec;
-      padding: 15px 20px;
-      border-radius: 20px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-dark);
-      text-align: left;
-      box-shadow: 0 4px 12px rgba(255, 107, 129, 0.06);
-      transition: all 0.25s ease;
-    }
-
-    .option-card:hover {
-      background: #fff0f3;
-      border-color: var(--primary);
-      transform: translateX(5px);
-      color: var(--primary);
-    }
-
-    .option-icon {
-      font-size: 20px;
-    }
-
-    /* Time Selector */
-    .time-selector-box {
-      background: #ffffff;
-      border: 1.5px solid #ffe5ec;
-      border-radius: 24px;
-      padding: 24px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      box-shadow: 0 4px 14px rgba(255, 107, 129, 0.08);
-    }
-
-    .time-input {
+    .time-slot-input {
       width: 100%;
-      background: #fff0f3;
-      border: 2px solid #ffccd5;
+      background: #fff0f5;
+      border: 2px solid #ffb3c6;
       color: var(--primary);
-      font-size: 26px;
-      font-weight: 700;
+      font-size: 24px;
+      font-weight: 800;
       text-align: center;
-      padding: 12px;
-      border-radius: 16px;
+      padding: 10px;
+      border-radius: 14px;
       outline: none;
-      cursor: pointer;
     }
 
-    /* Summary Card */
-    .summary-card {
-      background: #ffffff;
-      border: 1.5px dashed #ffb3c1;
-      border-radius: 20px;
-      padding: 16px;
-      margin: 20px 0;
-      text-align: left;
+    /* Itinerary Receipt */
+    .itinerary-box {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px dashed #ff8fa3;
+      border-radius: 18px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
+      margin-bottom: 14px;
     }
 
-    .summary-line {
+    .itinerary-line {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      font-size: 14px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #ffe5ec;
+      font-size: 12.5px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #ffe1e8;
     }
 
-    .summary-line:last-child {
+    .itinerary-line:last-child {
       border-bottom: none;
       padding-bottom: 0;
     }
 
-    .summary-line .q-key {
+    .itinerary-line .label {
       color: var(--text-muted);
-      font-weight: 500;
     }
 
-    .summary-line .q-val {
+    .itinerary-line .value {
       color: var(--primary);
       font-weight: 700;
-    }
-
-    .auto-notice {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 14px;
-      animation: pulseText 1.5s infinite;
-    }
-
-    @keyframes pulseText {
-      0%, 100% { opacity: 0.7; }
-      50% { opacity: 1; }
     }
 
     .hidden {
@@ -312,202 +274,229 @@
 </head>
 <body>
 
-  <!-- Floating Hearts Background -->
-  <div class="heart-bg" id="heartBg"></div>
+  <!-- Background Hearts -->
+  <div class="sky-hearts" id="skyHearts"></div>
 
-  <!-- Screen 1: Proposal Gate -->
-  <div class="card" id="proposalGate">
-    <div class="pill">🌸 Exclusive Invitation</div>
-    <h1>Will You Go On A Date With Me?</h1>
-    <p class="subtitle">I have planned something special, but it is incomplete without you.</p>
+  <div class="heart-stage">
+    <!-- SVG Vector Heart Shape Background -->
+    <svg class="heart-frame" viewBox="0 0 500 470">
+      <defs>
+        <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff" />
+          <stop offset="60%" stop-color="#fff2f6" />
+          <stop offset="100%" stop-color="#ffd5e2" />
+        </linearGradient>
+      </defs>
+      <path d="M 250,110 
+               C 225,40 130,20 65,85 
+               C 0,150 15,260 250,440 
+               C 485,260 500,150 435,85 
+               C 370,20 275,40 250,110 Z"
+            fill="url(#heartGradient)" 
+            stroke="#ffffff" 
+            stroke-width="7" />
+    </svg>
 
-    <div class="btn-row">
-      <button class="btn-action btn-yes" id="yesBtn" onclick="startQuestions()">Yes, absolutely! 💖</button>
-      <button class="btn-action btn-no" id="noBtn" onmouseover="dodgeNo()" onclick="dodgeNo()">No 🙈</button>
+    <!-- 1. Proposal Screen -->
+    <div class="inner-content" id="screenProposal">
+      <div class="pill-badge">🌸 EXCLUSIVE INVITATION</div>
+      <h1>Will You Go On A Date With Me?</h1>
+      <p class="lead-text">I've got something memorable in mind, but it only works if you're there.</p>
+
+      <div class="btn-lane">
+        <button class="btn-choice btn-yes" id="yesBtn" onclick="acceptInvitation(event)">Yes, absolutely! 💖</button>
+        <button class="btn-choice btn-no" id="noBtn" onmouseover="flyNo()" onclick="flyNo()">No 🙈</button>
+      </div>
     </div>
-  </div>
 
-  <!-- Screen 2: 3 Questions -->
-  <div class="card hidden" id="questionGate">
-    <div class="progress-wrap">
-      <div class="progress-bar" id="progressBar"></div>
+    <!-- 2. 3 Crazy Questions Screen -->
+    <div class="inner-content hidden" id="screenQuiz">
+      <div class="pill-badge" id="stepPill">QUESTION 01 OF 03</div>
+      <h1 id="quizQuestion" style="font-size: 20px; min-height: 48px; display:flex; align-items:center;">Loading...</h1>
+
+      <div id="quizContainer" style="width: 100%;"></div>
     </div>
-    <div class="step-tag" id="stepCounter">Question 01 of 03</div>
-    <h2 class="q-title" id="questionTitle">Loading...</h2>
-    
-    <div id="contentBox"></div>
-  </div>
 
-  <!-- Screen 3: Date Confirmed & Send To WhatsApp -->
-  <div class="card hidden" id="finalGate">
-    <div class="pill">💌 Date Confirmed</div>
-    <h1>I am Ready to Go! 🎉❤️</h1>
-    <p class="subtitle">Here are the final choices selected for our date:</p>
+    <!-- 3. Final Screen: Ready to go -->
+    <div class="inner-content hidden" id="screenFinal">
+      <div class="pill-badge">💌 IT'S A MATCH</div>
+      <h1 style="font-size: 22px;">I am Ready to Go! 🎉</h1>
+      <p class="lead-text" style="margin-bottom: 12px;">Here is what we're doing:</p>
 
-    <div class="summary-card" id="summaryView"></div>
+      <div class="itinerary-box" id="itineraryView"></div>
 
-    <button class="btn-action btn-yes" style="width: 100%;" onclick="sendWhatsAppNotification()">
-      Send Confirmation on WhatsApp 💬
-    </button>
-    <p class="auto-notice" id="autoRedirectMsg">Redirecting to WhatsApp to send confirmation... 🚀</p>
+      <button class="btn-choice btn-yes" style="width: 100%; font-size: 14px;" onclick="redirectWhatsApp()">
+        Send to WhatsApp Now 💬
+      </button>
+      <p style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">Auto-opening WhatsApp... 🚀</p>
+    </div>
   </div>
 
   <script>
     // ================= CONFIGURATION =================
-    // Yahan apna 10-digit WhatsApp number dalein country code ke sath (Bina '+' sign ke)
+    // Apna 10-digit WhatsApp number dalein country code ke sath (Bina '+' sign ke)
     const YOUR_PHONE_NUMBER = "91XXXXXXXXXX"; 
     // =================================================
 
-    // Continuous Floating Hearts
-    const heartBg = document.getElementById('heartBg');
-    const hearts = ['💖', '💕', '💗', '🌸', '✨', '💓'];
+    // Continuous floating hearts generator
+    const skyHearts = document.getElementById('skyHearts');
+    const heartSymbols = ['💖', '💕', '💗', '🌸', '✨', '💓', '💘'];
 
-    function spawnHeart() {
-      const el = document.createElement('span');
-      el.className = 'floating-heart';
-      el.innerText = hearts[Math.floor(Math.random() * hearts.length)];
-      el.style.left = Math.random() * 100 + 'vw';
-      el.style.fontSize = (Math.random() * 14 + 16) + 'px';
-      el.style.animationDuration = (Math.random() * 3 + 5) + 's';
-      heartBg.appendChild(el);
-      setTimeout(() => el.remove(), 7500);
+    function generateDriftingHeart() {
+      const h = document.createElement('span');
+      h.className = 'drifting-heart';
+      h.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+      h.style.left = Math.random() * 100 + 'vw';
+      h.style.fontSize = (Math.random() * 14 + 14) + 'px';
+      h.style.animationDuration = (Math.random() * 3 + 4.5) + 's';
+      skyHearts.appendChild(h);
+      setTimeout(() => h.remove(), 7000);
     }
-    setInterval(spawnHeart, 320);
+    setInterval(generateDriftingHeart, 300);
 
-    // Playful "No" Dodge
+    // Blast hearts upon clicking any button
+    function explodeHeartBurst(x, y) {
+      confetti({
+        particleCount: 50,
+        spread: 80,
+        origin: { 
+          x: x ? x / window.innerWidth : 0.5, 
+          y: y ? y / window.innerHeight : 0.6 
+        },
+        colors: ['#ff1e56', '#ff8fa3', '#ffffff', '#ff4d6d'],
+        shapes: ['circle'],
+        scalar: 1.2
+      });
+    }
+
+    // Playful "No" dodge
     const noBtn = document.getElementById('noBtn');
-    function dodgeNo() {
-      const offsetX = (Math.random() - 0.5) * 140;
-      const offsetY = (Math.random() - 0.5) * 80;
-      noBtn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+    function flyNo() {
+      const randX = (Math.random() - 0.5) * 140;
+      const randY = (Math.random() - 0.5) * 80;
+      noBtn.style.transform = `translate(${randX}px, ${randY}px)`;
     }
 
-    // 3 Exact English Questions
+    // 3 Crazy English Questions
     const questions = [
       {
         type: "choice",
-        title: "Where should we go?",
+        title: "Where should we escape to?",
         options: [
-          { text: "Romantic Rooftop with City Lights", icon: "🌃" },
-          { text: "Cozy Café with Aesthetic Vibes", icon: "☕" },
-          { text: "Peaceful Beach / Lakeside Walk", icon: "🌊" },
-          { text: "Lively Amusement Park / Arcade", icon: "🎡" }
+          { text: "Rooftop under neon city stars", icon: "🌃" },
+          { text: "Aesthetic café with cozy corners", icon: "☕" },
+          { text: "Peaceful beach & cold night breeze", icon: "🌊" },
+          { text: "Wild theme park rides & games", icon: "🎡" }
         ]
       },
       {
         type: "time",
-        title: "What time should we meet?",
-        subtitle: "Select the exact time:"
+        title: "What exact time should I pick you up?",
       },
       {
         type: "choice",
-        title: "What are we eating?",
+        title: "What delicious treat are we eating?",
         options: [
-          { text: "Wood-fired Pizza & Creamy Pasta", icon: "🍕" },
-          { text: "Handmade Asian Dim Sums & Ramen", icon: "🍜" },
-          { text: "Street Food & Tangy Snacks Tour", icon: "🌮" },
-          { text: "Dessert Feast (Waffles & Brownies)", icon: "🍨" }
+          { text: "Cheesy artisan pizza & pasta feast", icon: "🍕" },
+          { text: "Steaming hot handmade dim sums & ramen", icon: "🍜" },
+          { text: "Spicy & crunchy street food tour", icon: "🌮" },
+          { text: "Overloaded dessert waffles & ice cream", icon: "🍨" }
         ]
       }
     ];
 
     let currentQ = 0;
-    const answers = [];
+    const userAnswers = [];
 
-    function startQuestions() {
-      confetti({ particleCount: 110, spread: 70, origin: { y: 0.6 } });
-      document.getElementById('proposalGate').classList.add('hidden');
-      document.getElementById('questionGate').classList.remove('hidden');
-      renderCurrentQuestion();
+    function acceptInvitation(e) {
+      explodeHeartBurst(e?.clientX, e?.clientY);
+      document.getElementById('screenProposal').classList.add('hidden');
+      document.getElementById('screenQuiz').classList.remove('hidden');
+      renderQuestion();
     }
 
-    function renderCurrentQuestion() {
+    function renderQuestion() {
       const q = questions[currentQ];
-      document.getElementById('stepCounter').innerText = `Question 0${currentQ + 1} of 03`;
-      document.getElementById('questionTitle').innerText = q.title;
-      document.getElementById('progressBar').style.width = ((currentQ + 1) / 3) * 100 + '%';
+      document.getElementById('stepPill').innerText = `QUESTION 0${currentQ + 1} OF 03`;
+      document.getElementById('quizQuestion').innerText = q.title;
 
-      const contentBox = document.getElementById('contentBox');
-      contentBox.innerHTML = '';
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = '';
 
       if (q.type === "choice") {
-        const list = document.createElement('div');
-        list.className = 'options-list';
+        const stack = document.createElement('div');
+        stack.className = 'crazy-options';
         q.options.forEach(opt => {
-          const btn = document.createElement('div');
-          btn.className = 'option-card';
-          btn.innerHTML = `<span class="option-icon">${opt.icon}</span><span>${opt.text}</span>`;
-          btn.onclick = () => recordAnswer(q.title, opt.text);
-          list.appendChild(btn);
+          const card = document.createElement('div');
+          card.className = 'crazy-card';
+          card.innerHTML = `<span class="emoji">${opt.icon}</span><span>${opt.text}</span>`;
+          card.onclick = (e) => {
+            explodeHeartBurst(e.clientX, e.clientY);
+            saveChoice(q.title, opt.text);
+          };
+          stack.appendChild(card);
         });
-        contentBox.appendChild(list);
+        container.appendChild(stack);
       } else if (q.type === "time") {
-        const wrap = document.createElement('div');
-        wrap.className = 'time-selector-box';
-        wrap.innerHTML = `
-          <input type="time" id="exactTimeInput" class="time-input" value="19:30" required />
-          <button class="btn-action btn-yes" style="width:100%;" onclick="confirmTimeSelection()">
-            Set This Time ⏰
-          </button>
+        const deck = document.createElement('div');
+        deck.className = 'time-deck';
+        deck.innerHTML = `
+          <input type="time" id="timePick" class="time-slot-input" value="19:30" required />
+          <button class="btn-choice btn-yes" onclick="submitTime(event)">Lock In Time ⏰</button>
         `;
-        contentBox.appendChild(wrap);
+        container.appendChild(deck);
       }
     }
 
-    function confirmTimeSelection() {
-      const rawTime = document.getElementById('exactTimeInput').value;
-      if (!rawTime) {
-        alert("Please select a time!");
-        return;
-      }
-      
-      const [h, m] = rawTime.split(':');
+    function submitTime(e) {
+      const val = document.getElementById('timePick').value;
+      if (!val) return;
+
+      explodeHeartBurst(e.clientX, e.clientY);
+      const [h, m] = val.split(':');
       const hourNum = parseInt(h, 10);
       const ampm = hourNum >= 12 ? 'PM' : 'AM';
-      const formattedHour = hourNum % 12 || 12;
-      const formattedTime = `${String(formattedHour).padStart(2, '0')}:${m} ${ampm}`;
-
-      recordAnswer("Meeting Time", formattedTime);
+      const formatted = `${hourNum % 12 || 12}:${m} ${ampm}`;
+      saveChoice("Meeting Time", formatted);
     }
 
-    function recordAnswer(question, choice) {
-      answers.push({ question, choice });
+    function saveChoice(question, choice) {
+      userAnswers.push({ question, choice });
       currentQ++;
 
       if (currentQ < questions.length) {
-        renderCurrentQuestion();
+        setTimeout(renderQuestion, 200);
       } else {
-        showFinalCard();
+        setTimeout(showFinalScreen, 200);
       }
     }
 
-    function showFinalCard() {
-      document.getElementById('questionGate').classList.add('hidden');
-      document.getElementById('finalGate').classList.remove('hidden');
+    function showFinalScreen() {
+      document.getElementById('screenQuiz').classList.add('hidden');
+      document.getElementById('screenFinal').classList.remove('hidden');
 
-      confetti({ particleCount: 160, spread: 90, origin: { y: 0.55 } });
-
-      const summaryView = document.getElementById('summaryView');
-      summaryView.innerHTML = '';
-
-      answers.forEach(item => {
-        const row = document.createElement('div');
-        row.className = 'summary-line';
-        row.innerHTML = `<span class="q-key">${item.question}</span><span class="q-val">${item.choice}</span>`;
-        summaryView.appendChild(row);
+      confetti({
+        particleCount: 150,
+        spread: 100,
+        origin: { y: 0.55 }
       });
 
-      // 1.2 second baad automatic WhatsApp open ho jayega
-      setTimeout(() => {
-        sendWhatsAppNotification();
-      }, 1200);
+      const view = document.getElementById('itineraryView');
+      view.innerHTML = '';
+      userAnswers.forEach(ans => {
+        const line = document.createElement('div');
+        line.className = 'itinerary-line';
+        line.innerHTML = `<span class="label">${ans.question}</span><span class="value">${ans.choice}</span>`;
+        view.appendChild(line);
+      });
+
+      // 1.5 Seconds me direct WhatsApp trigger
+      setTimeout(redirectWhatsApp, 1500);
     }
 
-    function sendWhatsAppNotification() {
-      // English text jo uske number se aapke number par send hoga
-      const text = `Hey! I am ready to go on a date with you! 🥰✨%0A%0AHere are my choices:%0A📍 Location: ${answers[0]?.choice}%0A⏰ Time: ${answers[1]?.choice}%0A🍕 Food: ${answers[2]?.choice}%0A%0ACan't wait to see you! 💖`;
-      
-      window.location.href = `https://wa.me/${YOUR_PHONE_NUMBER}?text=${text}`;
+    function redirectWhatsApp() {
+      const msg = `Hey! I said YES, I am ready to go! 🥰✨%0A%0AHere are my choices:%0A📍 Location: ${userAnswers[0]?.choice}%0A⏰ Time: ${userAnswers[1]?.choice}%0A🍕 Food: ${userAnswers[2]?.choice}%0A%0ACan't wait! 💖`;
+      window.location.href = `https://wa.me/${YOUR_PHONE_NUMBER}?text=${msg}`;
     }
   </script>
 </body>

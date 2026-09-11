@@ -3,130 +3,116 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>A Special Proposal ✨</title>
+  <title>A Special Invite For You ✨</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #ff2d60;
-      --secondary: #ff758c;
-      --accent: #7928ca;
-      --card-bg: rgba(255, 255, 255, 0.75);
-      --border-glow: rgba(255, 255, 255, 0.85);
-      --text-dark: #20101b;
-      --text-muted: #6b5c68;
+      --primary: #ff1e56;
+      --accent: #9d4edd;
+      --bg-dark: #0f0c1b;
+      --card-bg: rgba(22, 16, 38, 0.75);
+      --border-glow: rgba(255, 255, 255, 0.18);
+      --text-main: #ffffff;
+      --text-dim: #b8b0c8;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Outfit', sans-serif;
     }
 
     body {
       min-height: 100vh;
-      background: radial-gradient(circle at 10% 20%, #ffeef2 0%, #fed6e3 40%, #ffbee3 90%);
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 15% 15%, rgba(255, 30, 86, 0.35) 0px, transparent 50%),
+        radial-gradient(at 85% 85%, rgba(157, 78, 221, 0.4) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(255, 107, 107, 0.15) 0px, transparent 55%);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow-x: hidden;
       position: relative;
-      padding: 24px;
+      padding: 20px;
     }
 
-    /* Subtle ambient light orbs */
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(80px);
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.5;
-    }
-    .orb-1 { width: 320px; height: 320px; background: #ff4d6d; top: -50px; left: -50px; }
-    .orb-2 { width: 350px; height: 350px; background: #7928ca; bottom: -80px; right: -80px; }
-
-    /* Floating hearts canvas */
-    .heart-layer {
+    .sparkle-field {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      overflow: hidden;
     }
 
-    .floating-item {
+    .sparkle {
       position: absolute;
-      bottom: -50px;
-      animation: rise 8s infinite linear;
-      font-size: 20px;
+      bottom: -30px;
+      animation: drift 8s linear infinite;
       user-select: none;
+      opacity: 0.65;
     }
 
-    @keyframes rise {
-      0% { transform: translateY(0) scale(0.6) rotate(0deg); opacity: 0; }
-      20% { opacity: 0.7; }
-      80% { opacity: 0.7; }
-      100% { transform: translateY(-115vh) scale(1.2) rotate(360deg); opacity: 0; }
+    @keyframes drift {
+      0% { transform: translateY(0) scale(0.6); opacity: 0; }
+      30% { opacity: 0.8; }
+      100% { transform: translateY(-110vh) scale(1.2) rotate(360deg); opacity: 0; }
     }
 
-    /* Glassmorphism Card */
     .card {
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 500px;
+      max-width: 460px;
       background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1.5px solid var(--border-glow);
-      border-radius: 32px;
-      padding: 40px 32px;
-      box-shadow: 0 25px 50px -12px rgba(255, 45, 96, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border-glow);
+      border-radius: 36px;
+      padding: 40px 30px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45), 0 0 35px rgba(255, 30, 86, 0.2);
       text-align: center;
-      transition: all 0.4s ease;
-      animation: smoothEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: popIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    @keyframes smoothEntrance {
-      from { opacity: 0; transform: translateY(25px) scale(0.97); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.94) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
     }
 
-    .badge-pill {
+    .pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(255, 45, 96, 0.08);
-      color: var(--primary);
       padding: 6px 14px;
       border-radius: 50px;
+      background: rgba(255, 30, 86, 0.15);
+      border: 1px solid rgba(255, 30, 86, 0.3);
+      color: #ff6b8b;
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 1.2px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
       margin-bottom: 18px;
-      border: 1px solid rgba(255, 45, 96, 0.15);
     }
 
     h1 {
       font-family: 'Playfair Display', serif;
       font-size: 32px;
-      color: var(--text-dark);
+      color: var(--text-main);
       margin-bottom: 12px;
       line-height: 1.25;
     }
 
-    p.lead {
-      color: var(--text-muted);
+    p.subtitle {
+      color: var(--text-dim);
       font-size: 15px;
       line-height: 1.6;
-      margin-bottom: 30px;
+      margin-bottom: 28px;
     }
 
-    /* Interactive Buttons */
-    .btn-wrap {
+    .btn-row {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -135,65 +121,63 @@
       min-height: 60px;
     }
 
-    .btn {
-      padding: 14px 34px;
-      border-radius: 20px;
+    .btn-action {
+      padding: 15px 36px;
+      border-radius: 22px;
       font-size: 16px;
       font-weight: 700;
       border: none;
       cursor: pointer;
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
-      position: relative;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .btn-yes {
-      background: linear-gradient(135deg, #ff2d60 0%, #e0004d 100%);
+      background: linear-gradient(135deg, #ff1e56 0%, #9d4edd 100%);
       color: #ffffff;
-      box-shadow: 0 10px 25px rgba(255, 45, 96, 0.4);
+      box-shadow: 0 10px 25px rgba(255, 30, 86, 0.45);
     }
 
     .btn-yes:hover {
       transform: scale(1.05);
-      box-shadow: 0 14px 30px rgba(255, 45, 96, 0.5);
+      box-shadow: 0 14px 32px rgba(255, 30, 86, 0.6);
     }
 
     .btn-no {
-      background: rgba(255, 255, 255, 0.85);
-      color: var(--text-muted);
-      border: 1px solid #ffd1dc;
+      background: rgba(255, 255, 255, 0.08);
+      color: #bbb;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
     }
 
-    /* Progress Tracker */
-    .progress-track {
+    .progress-wrap {
       width: 100%;
       height: 6px;
-      background: rgba(255, 45, 96, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       border-radius: 10px;
       overflow: hidden;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
-    .progress-fill {
+    .progress-bar {
       height: 100%;
-      width: 5%;
-      background: linear-gradient(90deg, #ff2d60, #7928ca);
+      width: 33.33%;
+      background: linear-gradient(90deg, #ff1e56, #9d4edd);
       border-radius: 10px;
       transition: width 0.35s ease;
     }
 
-    .step-label {
+    .step-tag {
       font-size: 12px;
       font-weight: 700;
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
+      color: #ff6b8b;
+      letter-spacing: 1px;
       margin-bottom: 8px;
     }
 
-    .question-head {
+    .q-title {
       font-family: 'Playfair Display', serif;
-      font-size: 21px;
-      color: var(--text-dark);
+      font-size: 22px;
+      color: var(--text-main);
       margin-bottom: 24px;
       min-height: 55px;
       display: flex;
@@ -201,92 +185,105 @@
       justify-content: center;
     }
 
-    .choice-stack {
+    .options-list {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    .choice-card {
-      background: rgba(255, 255, 255, 0.85);
-      border: 1.5px solid rgba(255, 255, 255, 0.95);
+    .option-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       padding: 16px 20px;
       border-radius: 20px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       font-size: 15px;
-      font-weight: 600;
-      color: var(--text-dark);
+      font-weight: 500;
+      color: #e5e0f0;
       text-align: left;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
       transition: all 0.25s ease;
     }
 
-    .choice-card:hover {
-      background: #ffffff;
-      border-color: var(--primary);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(255, 45, 96, 0.15);
-      color: var(--primary);
+    .option-card:hover {
+      background: rgba(255, 30, 86, 0.15);
+      border-color: rgba(255, 30, 86, 0.5);
+      transform: translateX(4px);
+      color: #ffffff;
     }
 
-    .choice-card .bullet-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--secondary);
-      flex-shrink: 0;
-      transition: transform 0.2s ease, background 0.2s ease;
+    .option-icon {
+      font-size: 20px;
     }
 
-    .choice-card:hover .bullet-dot {
-      transform: scale(1.6);
-      background: var(--primary);
-    }
-
-    /* Final Summary Board */
-    .itinerary-scroll {
-      max-height: 290px;
-      overflow-y: auto;
-      padding-right: 6px;
-      margin: 20px 0;
+    /* Custom Time Picker Module */
+    .time-selector-box {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      padding: 24px 20px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      align-items: center;
+      gap: 18px;
     }
 
-    .itinerary-scroll::-webkit-scrollbar {
-      width: 4px;
+    .time-input {
+      width: 100%;
+      background: rgba(15, 12, 27, 0.85);
+      border: 1.5px solid rgba(255, 30, 86, 0.5);
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+      padding: 14px;
+      border-radius: 16px;
+      outline: none;
+      cursor: pointer;
     }
 
-    .itinerary-scroll::-webkit-scrollbar-thumb {
-      background: #ffccd5;
-      border-radius: 4px;
+    .time-input::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+      cursor: pointer;
+      transform: scale(1.3);
+      margin-right: 6px;
     }
 
-    .itinerary-row {
-      background: #ffffff;
-      padding: 12px 16px;
-      border-radius: 14px;
-      border: 1px solid #ffe5ec;
+    .summary-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 16px;
+      margin: 20px 0;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .summary-line {
       display: flex;
       justify-content: space-between;
-      gap: 10px;
-      font-size: 13px;
+      align-items: center;
+      font-size: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
 
-    .itinerary-row .q-text {
-      color: var(--text-muted);
-      font-weight: 500;
-      text-align: left;
+    .summary-line:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
     }
 
-    .itinerary-row .ans-text {
-      color: var(--primary);
+    .summary-line .q-key {
+      color: var(--text-dim);
+    }
+
+    .summary-line .q-val {
+      color: #ff6b8b;
       font-weight: 700;
-      text-align: right;
     }
 
     .hidden {
@@ -296,161 +293,209 @@
 </head>
 <body>
 
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="heart-layer" id="heartLayer"></div>
+  <div class="sparkle-field" id="sparkleField"></div>
 
-  <!-- Screen 1: The Proposal -->
-  <div class="card" id="cardProposal">
-    <div class="badge-pill">✨ Handcrafted Invitation</div>
-    <h1>Will You Go Out With Me?</h1>
-    <p class="lead">Every beautiful journey begins with a small step. I would love to make this one truly unforgettable with you.</p>
+  <!-- Screen 1: Proposal -->
+  <div class="card" id="proposalGate">
+    <div class="pill">✨ Exclusive Invitation</div>
+    <h1>Will You Go On A Date With Me?</h1>
+    <p class="subtitle">I've got something special in mind, but it only works if you're there.</p>
 
-    <div class="btn-wrap">
-      <button class="btn btn-yes" id="yesBtn" onclick="onAccept()">Yes, I'd love to! 💖</button>
-      <button class="btn btn-no" id="noBtn" onmouseover="dodgeNo()" onclick="dodgeNo()">No 🙈</button>
+    <div class="btn-row">
+      <button class="btn-action btn-yes" id="yesBtn" onclick="startQuestions()">Yes, absolutely! 💖</button>
+      <button class="btn-action btn-no" id="noBtn" onmouseover="dodgeNo()" onclick="dodgeNo()">No 🙈</button>
     </div>
   </div>
 
-  <!-- Screen 2: 20 Curated Questions -->
-  <div class="card hidden" id="cardQuestions">
-    <div class="progress-track">
-      <div class="progress-fill" id="progressBar"></div>
+  <!-- Screen 2: Dynamic Questions -->
+  <div class="card hidden" id="questionGate">
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar"></div>
     </div>
-    <div class="step-label" id="stepCounter">Question 01 of 20</div>
-    <h2 class="question-head" id="questionPrompt">Loading...</h2>
+    <div class="step-tag" id="stepCounter">Question 01 of 03</div>
+    <h2 class="q-title" id="questionTitle">Loading...</h2>
     
-    <div class="choice-stack" id="choicesBox"></div>
+    <div id="contentBox"></div>
   </div>
 
-  <!-- Screen 3: Final Aesthetic Itinerary -->
-  <div class="card hidden" id="cardResult">
-    <div class="badge-pill">💌 Date Confirmed</div>
-    <h1>It's a Match! 🎉</h1>
-    <p class="lead">Here is our handpicked itinerary, curated completely around your taste:</p>
+  <!-- Screen 3: Final Confirmation & Notification -->
+  <div class="card hidden" id="finalGate">
+    <div class="pill">💌 Date Locked In</div>
+    <h1>It's A Date! 🎉</h1>
+    <p class="subtitle">Here are your selected details:</p>
 
-    <div class="itinerary-scroll" id="receiptBox"></div>
-    <p style="font-size: 13px; color: var(--primary); font-weight: 700; margin-top: 15px;">Looking forward to creating unforgettable memories with you! 🌹</p>
+    <div class="summary-card" id="summaryView"></div>
+
+    <button class="btn-action btn-yes" style="width: 100%; margin-top: 10px;" onclick="sendWhatsAppNotification()">
+      Confirm via WhatsApp 💬
+    </button>
+    <p style="font-size: 12px; color: var(--text-dim); margin-top: 12px;">Click to let me know the exact time and choices!</p>
   </div>
 
   <script>
-    // 1. Ambient Sparkle & Float Generation
-    const heartLayer = document.getElementById('heartLayer');
-    const floatSymbols = ['🤍', '✨', '🌸', '💫', '💖'];
+    // ================= CONFIGURATION =================
+    // Apna 10-digit mobile number country code ke sath likhein (bina '+' ke)
+    const YOUR_PHONE_NUMBER = "91XXXXXXXXXX"; 
 
-    function dropFloatingElement() {
-      const el = document.createElement('span');
-      el.className = 'floating-item';
-      el.innerText = floatSymbols[Math.floor(Math.random() * floatSymbols.length)];
-      el.style.left = Math.random() * 100 + 'vw';
-      el.style.fontSize = (Math.random() * 14 + 14) + 'px';
-      el.style.animationDuration = (Math.random() * 4 + 6) + 's';
-      heartLayer.appendChild(el);
+    // Optional: Silent email alert ke liye (e.g. "https://formspree.io/f/xyzabced")
+    const FORMSPREE_ENDPOINT = "";
+    // =================================================
 
-      setTimeout(() => el.remove(), 9000);
+    const sparkleField = document.getElementById('sparkleField');
+    const icons = ['✨', '🌸', '💫', '💖', '🤍'];
+
+    function createSparkle() {
+      const sp = document.createElement('span');
+      sp.className = 'sparkle';
+      sp.innerText = icons[Math.floor(Math.random() * icons.length)];
+      sp.style.left = Math.random() * 100 + 'vw';
+      sp.style.fontSize = (Math.random() * 12 + 14) + 'px';
+      sp.style.animationDuration = (Math.random() * 3 + 5) + 's';
+      sparkleField.appendChild(sp);
+      setTimeout(() => sp.remove(), 7500);
     }
-    setInterval(dropFloatingElement, 400);
+    setInterval(createSparkle, 350);
 
-    // 2. Playful Dodge for "No" Button
     const noBtn = document.getElementById('noBtn');
     function dodgeNo() {
-      const randomX = (Math.random() - 0.5) * 140;
-      const randomY = (Math.random() - 0.5) * 80;
-      noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+      const offsetX = (Math.random() - 0.5) * 140;
+      const offsetY = (Math.random() - 0.5) * 80;
+      noBtn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
     }
 
-    // 3. 20 Full English Questions
     const questions = [
-      { q: "Where should our dream setting be?", opts: ["Chic Rooftop with a Skyline View", "Cozy Corner in a Vintage Café", "Quiet Sunset by the Waves", "Lush Botanical Garden Picnic"] },
-      { q: "What is your favorite time to meet?", opts: ["Misty Morning Coffee", "Lazy Sunny Brunch", "Candlelit Evening Dinner", "Late-Night Starlight Drive"] },
-      { q: "What cuisine are we savoring together?", opts: ["Artisanal Italian Pizza & Pasta", "Rich Authentic Continental", "Spicy Asian Noodles & Dumplings", "Vibrant Street Gourmet Food"] },
-      { q: "What kind of table vibe do you prefer?", opts: ["Next to a Panoramic Glass Window", "Private Dimly Lit Cozy Booth", "Open Sky Terrace with a Breeze", "Garden Patio with Fairy Lights"] },
-      { q: "What should we nibble on first?", opts: ["Crisp Truffle Fries & Dips", "Garlic Herb Bread with Melted Cheese", "Spiced Skewers & Gourmet Sliders", "Steaming Handmade Dumplings"] },
-      { q: "What will be filling your glass?", opts: ["Artisan Roast Latte / Cappuccino", "Chilled Berry Mojito / Mocktail", "Decadent Belgium Chocolate Shake", "Fresh Sparkling Peach Iced Tea"] },
-      { q: "Which sweet treat completes the meal?", opts: ["Sizzling Brownie with Vanilla Cream", "Classic New York Cheesecake", "Warm Belgian Waffles with Nutella", "Handcrafted Gelato & Macarons"] },
-      { q: "Which flowers brighten your day the most?", opts: ["Classic Deep Red Roses", "Soft Pastel Pink Lilies", "Radiant Happy Sunflowers", "Minimal White Orchids"] },
-      { q: "How are we traveling to our spot?", opts: ["Long Scenic Drive with Soft Tunes", "Fun Breezy Ride", "Relaxed Chauffeur-Driven Ride", "Romantic Walk Under Streetlamps"] },
-      { q: "What vibe should our playlist carry?", opts: ["Heartwarming Acoustic Melodies", "Dreamy Lo-Fi Instrumental Beats", "Classic Romantic Pop Hits", "Soulful Modern Indie Ballads"] },
-      { q: "What dress code theme fits us best?", opts: ["Timeless All-Black Elegance", "Soft Aesthetic Pastel Palette", "Smart Casual White & Denim", "Chic Semi-Formal Evening Wear"] },
-      { q: "What do we do right after dinner?", opts: ["A peaceful stroll holding hands", "Fun arcade games and laughter", "A quiet spot to watch the city lights", "Grab dessert at a 24/7 drive-thru"] },
-      { q: "What should our talks revolve around?", opts: ["Hilarious childhood memories", "Wild dreams and deep aspirations", "Favorite movies and music tastes", "Raw, honest feelings and life"] },
-      { q: "How should we preserve our memory?", opts: ["Cute candid smartphone portraits", "Vintage instant Polaroid prints", "A tiny aesthetic video reel", "Just living purely in the moment"] },
-      { q: "What little surprise touches your heart?", opts: ["A heartfelt handwritten note", "A box of rare gourmet chocolates", "A tiny sentimental souvenir", "A delicate handcrafted keepsake"] },
-      { q: "What if it suddenly starts pouring rain?", opts: ["Dance right through the downpour", "Share one single tiny umbrella", "Sit inside the car and watch droplets", "Watch the rain through a café window"] },
-      { q: "Your go-to late night ice cream pick?", opts: ["Rich Dark Belgian Chocolate", "Sweet Salted Caramel Crunch", "Fresh Strawberry Cream Swirl", "Warm Vanilla Bean with Fudge"] },
-      { q: "What golden rule guides our date?", opts: ["Phones kept entirely out of sight", "Unfiltered laughter and honest smiles", "Order whatever you secretly crave", "No rushing—let time stand still"] },
-      { q: "How do we bid farewell until next time?", opts: ["A long, warm, genuine hug", "A gentle kiss on the forehead", "Holding hands till stepping away", "Pinky-promising our next catchup"] },
-      { q: "Most importantly: when is date number two?", opts: ["Tomorrow itself!", "Next weekend for sure", "Every week, without fail", "Whenever you whisper the word"] }
+      {
+        type: "choice",
+        title: "Where should we go?",
+        options: [
+          { text: "Romantic Rooftop with City Lights", icon: "🌃" },
+          { text: "Cozy Café with Aesthetic Vibes", icon: "☕" },
+          { text: "Peaceful Beach / Lakeside Walk", icon: "🌊" },
+          { text: "Lively Amusement Park / Arcade", icon: "🎡" }
+        ]
+      },
+      {
+        type: "time",
+        title: "What exact time should I pick you up?",
+        subtitle: "Pick the exact hour & minute that fits your schedule:"
+      },
+      {
+        type: "choice",
+        title: "What are we eating?",
+        options: [
+          { text: "Wood-fired Pizza & Creamy Pasta", icon: "🍕" },
+          { text: "Handmade Asian Dim Sums & Ramen", icon: "🍜" },
+          { text: "Street Food & Tangy Snacks Tour", icon: "🌮" },
+          { text: "Dessert Feast (Waffles & Brownies)", icon: "🍨" }
+        ]
+      }
     ];
 
-    let currentIndex = 0;
-    const recordedAnswers = [];
+    let currentQ = 0;
+    const answers = [];
 
-    function onAccept() {
-      confetti({
-        particleCount: 120,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
-      document.getElementById('cardProposal').classList.add('hidden');
-      document.getElementById('cardQuestions').classList.remove('hidden');
-      renderQuestion();
+    function startQuestions() {
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+      document.getElementById('proposalGate').classList.add('hidden');
+      document.getElementById('questionGate').classList.remove('hidden');
+      renderCurrentQuestion();
     }
 
-    function renderQuestion() {
-      const activeData = questions[currentIndex];
-      
-      document.getElementById('stepCounter').innerText = `Question ${String(currentIndex + 1).padStart(2, '0')} of ${questions.length}`;
-      document.getElementById('questionPrompt').innerText = activeData.q;
-      
-      const progressPercent = ((currentIndex + 1) / questions.length) * 100;
-      document.getElementById('progressBar').style.width = progressPercent + '%';
+    function renderCurrentQuestion() {
+      const q = questions[currentQ];
+      document.getElementById('stepCounter').innerText = `Question 0${currentQ + 1} of 03`;
+      document.getElementById('questionTitle').innerText = q.title;
+      document.getElementById('progressBar').style.width = ((currentQ + 1) / 3) * 100 + '%';
 
-      const container = document.getElementById('choicesBox');
-      container.innerHTML = '';
+      const contentBox = document.getElementById('contentBox');
+      contentBox.innerHTML = '';
 
-      activeData.opts.forEach(optionText => {
-        const item = document.createElement('button');
-        item.className = 'choice-card';
-        item.innerHTML = `<span class="bullet-dot"></span><span>${optionText}</span>`;
-        item.onclick = () => saveAnswer(activeData.q, optionText);
-        container.appendChild(item);
-      });
-    }
-
-    function saveAnswer(question, choice) {
-      recordedAnswers.push({ question, choice });
-      currentIndex++;
-
-      if (currentIndex < questions.length) {
-        renderQuestion();
-      } else {
-        renderSummary();
+      if (q.type === "choice") {
+        const list = document.createElement('div');
+        list.className = 'options-list';
+        q.options.forEach(opt => {
+          const btn = document.createElement('div');
+          btn.className = 'option-card';
+          btn.innerHTML = `<span class="option-icon">${opt.icon}</span><span>${opt.text}</span>`;
+          btn.onclick = () => recordAnswer(q.title, opt.text);
+          list.appendChild(btn);
+        });
+        contentBox.appendChild(list);
+      } else if (q.type === "time") {
+        const wrap = document.createElement('div');
+        wrap.className = 'time-selector-box';
+        wrap.innerHTML = `
+          <input type="time" id="exactTimeInput" class="time-input" value="19:30" required />
+          <button class="btn-action btn-yes" style="width:100%;" onclick="confirmTimeSelection()">
+            Set This Time ⏰
+          </button>
+        `;
+        contentBox.appendChild(wrap);
       }
     }
 
-    function renderSummary() {
-      document.getElementById('cardQuestions').classList.add('hidden');
-      document.getElementById('cardResult').classList.remove('hidden');
+    function confirmTimeSelection() {
+      const rawTime = document.getElementById('exactTimeInput').value;
+      if (!rawTime) {
+        alert("Please pick a time!");
+        return;
+      }
+      
+      // Convert 24-hour to readable 12-hour AM/PM format
+      const [h, m] = rawTime.split(':');
+      const hourNum = parseInt(h, 10);
+      const ampm = hourNum >= 12 ? 'PM' : 'AM';
+      const formattedHour = hourNum % 12 || 12;
+      const formattedTime = `${String(formattedHour).padStart(2, '0')}:${m} ${ampm}`;
 
-      confetti({
-        particleCount: 160,
-        spread: 90,
-        origin: { y: 0.55 }
-      });
+      recordAnswer("Pick-up Time", formattedTime);
+    }
 
-      const receiptBox = document.getElementById('receiptBox');
-      receiptBox.innerHTML = '';
+    function recordAnswer(question, choice) {
+      answers.push({ question, choice });
+      currentQ++;
 
-      recordedAnswers.forEach((entry, i) => {
+      if (currentQ < questions.length) {
+        renderCurrentQuestion();
+      } else {
+        showFinalCard();
+      }
+    }
+
+    function showFinalCard() {
+      document.getElementById('questionGate').classList.add('hidden');
+      document.getElementById('finalGate').classList.remove('hidden');
+
+      confetti({ particleCount: 150, spread: 90, origin: { y: 0.55 } });
+
+      const summaryView = document.getElementById('summaryView');
+      summaryView.innerHTML = '';
+
+      answers.forEach(item => {
         const row = document.createElement('div');
-        row.className = 'itinerary-row';
-        row.innerHTML = `
-          <span class="q-text">#${i + 1}. ${entry.question}</span>
-          <span class="ans-text">${entry.choice}</span>
-        `;
-        receiptBox.appendChild(row);
+        row.className = 'summary-line';
+        row.innerHTML = `<span class="q-key">${item.question}</span><span class="q-val">${item.choice}</span>`;
+        summaryView.appendChild(row);
       });
+
+      if (FORMSPREE_ENDPOINT) {
+        fetch(FORMSPREE_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            event: "Proposal Accepted! 🎉",
+            location: answers[0]?.choice,
+            exact_time: answers[1]?.choice,
+            food: answers[2]?.choice,
+            submitted_at: new Date().toLocaleString()
+          })
+        }).catch(err => console.log(err));
+      }
+    }
+
+    function sendWhatsAppNotification() {
+      const text = `Hey! I said YES! 🥰✨%0A%0AHere are my plans for our date:%0A📍 *Place:* ${answers[0]?.choice}%0A⏰ *Pick-up Time:* ${answers[1]?.choice}%0A🍕 *Food:* ${answers[2]?.choice}%0A%0ASee you at ${answers[1]?.choice}! 💖`;
+      window.open(`https://wa.me/${YOUR_PHONE_NUMBER}?text=${text}`, '_blank');
     }
   </script>
 </body>

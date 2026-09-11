@@ -2,39 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>A Special Invite For You ✨</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #ff1e56;
-      --primary-glow: rgba(255, 30, 86, 0.45);
-      --heart-bg: linear-gradient(145deg, #ffffff 0%, #fff0f5 55%, #ffe1ea 100%);
-      --text-dark: #3a1020;
-      --text-muted: #825f6e;
+      --hot-pink: #ff1358;
+      --deep-rose: #d90368;
+      --glow-pink: rgba(255, 19, 88, 0.4);
+      --glass-white: rgba(255, 255, 255, 0.92);
+      --text-main: #2b0b18;
+      --text-sub: #785265;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
 
+    html, body {
+      height: 100%;
+      overflow: hidden; /* Scroll bilkul band */
+    }
+
     body {
-      min-height: 100vh;
-      background: radial-gradient(circle at 50% 30%, #ffe3ec 0%, #ffc2d4 50%, #ff9ebb 100%);
+      background: radial-gradient(circle at 50% 20%, #ffeaf1 0%, #ffc6d9 50%, #ff9ebb 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow-x: hidden;
+      padding: 12px;
       position: relative;
-      padding: 16px;
     }
 
-    /* Ambient Floating Particle Layer */
+    /* Ambient Floating Hearts */
     .sky-hearts {
       position: fixed;
       inset: 0;
@@ -42,108 +46,109 @@
       z-index: 0;
     }
 
-    .drifting-heart {
+    .heart-fly {
       position: absolute;
-      bottom: -40px;
-      animation: floatUp 6s linear infinite;
+      bottom: -30px;
+      animation: flyUp 5.5s linear infinite;
       user-select: none;
     }
 
-    @keyframes floatUp {
+    @keyframes flyUp {
       0% { transform: translateY(0) scale(0.6) rotate(0deg); opacity: 0; }
-      20% { opacity: 0.8; }
-      80% { opacity: 0.8; }
-      100% { transform: translateY(-115vh) scale(1.3) rotate(360deg); opacity: 0; }
+      20% { opacity: 0.85; }
+      80% { opacity: 0.85; }
+      100% { transform: translateY(-105vh) scale(1.2) rotate(360deg); opacity: 0; }
     }
 
-    /* Outer Container */
-    .heart-stage {
+    /* Heart Card Wrapper */
+    .heart-container {
       position: relative;
       z-index: 2;
       width: 100%;
-      max-width: 440px;
+      max-width: 390px;
+      height: 480px;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 520px;
+      filter: drop-shadow(0 18px 30px rgba(217, 3, 104, 0.28)) drop-shadow(0 0 16px rgba(255, 255, 255, 0.85));
+      animation: heartbeatPulse 3s infinite ease-in-out;
     }
 
-    /* SVG Heart Canvas Mask */
-    .heart-frame {
-      position: absolute;
-      inset: 0;
+    @keyframes heartbeatPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.018); }
+    }
+
+    /* Mathematical True Heart Silhouette */
+    .heart-shape-card {
       width: 100%;
       height: 100%;
-      z-index: 1;
-      filter: drop-shadow(0 20px 35px rgba(255, 30, 86, 0.35)) drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
-      animation: heartbeat 2.8s infinite ease-in-out;
-    }
-
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.02); }
-    }
-
-    /* Content Box Inside Heart */
-    .inner-content {
+      background: linear-gradient(160deg, #ffffff 0%, #fff2f6 50%, #ffdbe6 100%);
+      clip-path: path("M 195,470 C 120,380 0,275 0,165 C 0,70 70,0 160,0 C 210,0 240,40 195,95 C 150,40 180,0 230,0 C 320,0 390,70 390,165 C 390,275 270,380 195,470 Z");
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 24px;
       position: relative;
-      z-index: 3;
+    }
+
+    /* Content Area inside the Heart Center */
+    .card-content {
       width: 82%;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 30px 10px 45px 10px;
+      margin-top: -15px; /* Heart ke belly me perfectly center */
     }
 
-    .pill-badge {
+    .badge {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      padding: 5px 14px;
-      border-radius: 50px;
       background: #ffe3ec;
-      border: 1px solid #ffb8cf;
-      color: var(--primary);
-      font-size: 10px;
+      border: 1px solid #ffb5cb;
+      color: var(--hot-pink);
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 9.5px;
       font-weight: 800;
-      letter-spacing: 1.4px;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--text-dark);
-      line-height: 1.25;
-      margin-bottom: 8px;
+      font-size: 22px;
+      color: var(--text-main);
+      line-height: 1.2;
+      margin-bottom: 6px;
     }
 
-    p.lead-text {
-      color: var(--text-muted);
-      font-size: 13.5px;
-      line-height: 1.5;
-      margin-bottom: 22px;
-      padding: 0 8px;
+    p.subtitle {
+      font-size: 12.5px;
+      color: var(--text-sub);
+      line-height: 1.4;
+      margin-bottom: 16px;
+      padding: 0 4px;
     }
 
-    /* Action Buttons */
-    .btn-lane {
+    /* Buttons Screen 1 */
+    .btn-wrap {
       display: flex;
-      justify-content: center;
+      gap: 12px;
       align-items: center;
-      gap: 16px;
+      justify-content: center;
       width: 100%;
-      min-height: 55px;
+      min-height: 52px;
       position: relative;
     }
 
-    .btn-choice {
-      padding: 13px 26px;
+    .btn-act {
+      padding: 12px 24px;
       border-radius: 50px;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       border: none;
       cursor: pointer;
@@ -151,120 +156,125 @@
     }
 
     .btn-yes {
-      background: linear-gradient(135deg, #ff1e56, #ff6584);
+      background: linear-gradient(135deg, #ff1358 0%, #ff527f 100%);
       color: #fff;
-      box-shadow: 0 10px 22px var(--primary-glow);
+      box-shadow: 0 8px 20px var(--glow-pink);
     }
 
     .btn-yes:active {
-      transform: scale(0.96);
+      transform: scale(0.95);
     }
 
     .btn-no {
-      background: rgba(255, 255, 255, 0.95);
-      color: var(--text-muted);
-      border: 1.5px solid #ffccd8;
+      background: #ffffff;
+      color: var(--text-sub);
+      border: 1.5px solid #ffccd9;
     }
 
-    /* Crazy Options Styling */
-    .crazy-options {
+    /* ZERO-SCROLL 2x2 Grid Layout */
+    .zero-scroll-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
       width: 100%;
+    }
+
+    .grid-card {
+      background: #ffffff;
+      border: 1.5px solid #ffccd9;
+      border-radius: 16px;
+      padding: 10px 8px;
       display: flex;
       flex-direction: column;
-      gap: 9px;
-      max-height: 250px;
-      overflow-y: auto;
-      padding: 2px;
-    }
-
-    .crazy-card {
-      background: rgba(255, 255, 255, 0.92);
-      border: 1.5px solid #ffccd9;
-      padding: 12px 16px;
-      border-radius: 18px;
-      display: flex;
       align-items: center;
-      gap: 12px;
-      font-size: 13.5px;
-      font-weight: 600;
-      color: var(--text-dark);
+      justify-content: center;
+      gap: 4px;
+      text-align: center;
       cursor: pointer;
-      text-align: left;
-      box-shadow: 0 4px 12px rgba(255, 51, 102, 0.07);
-      transition: all 0.22s ease;
+      box-shadow: 0 3px 8px rgba(217, 3, 104, 0.06);
+      transition: all 0.2s ease;
     }
 
-    .crazy-card:hover, .crazy-card:active {
-      background: #ff1e56;
-      border-color: #ff1e56;
+    .grid-card:hover, .grid-card:active {
+      background: var(--hot-pink);
+      border-color: var(--hot-pink);
+      transform: scale(1.03);
+      box-shadow: 0 6px 14px var(--glow-pink);
+    }
+
+    .grid-card .icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .grid-card .title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.25;
+    }
+
+    .grid-card:hover .title, .grid-card:active .title {
       color: #ffffff;
-      transform: scale(1.02) translateX(4px);
-      box-shadow: 0 8px 18px rgba(255, 30, 86, 0.35);
     }
 
-    .crazy-card .emoji {
-      font-size: 20px;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-    }
-
-    /* Time Selector */
-    .time-deck {
+    /* Time Picker Box */
+    .time-compact-box {
       width: 100%;
-      background: rgba(255, 255, 255, 0.85);
-      border: 1.5px solid #ffccd9;
-      border-radius: 20px;
-      padding: 18px;
       display: flex;
       flex-direction: column;
       gap: 12px;
+      align-items: center;
     }
 
     .time-slot-input {
-      width: 100%;
-      background: #fff0f5;
-      border: 2px solid #ffb3c6;
-      color: var(--primary);
-      font-size: 24px;
+      width: 85%;
+      background: #ffffff;
+      border: 2px solid #ff9ebb;
+      color: var(--hot-pink);
+      font-size: 22px;
       font-weight: 800;
       text-align: center;
-      padding: 10px;
+      padding: 8px;
       border-radius: 14px;
       outline: none;
+      box-shadow: 0 4px 10px rgba(255, 19, 88, 0.08);
     }
 
-    /* Itinerary Receipt */
-    .itinerary-box {
+    /* Final Summary Board */
+    .final-receipt {
       width: 100%;
       background: rgba(255, 255, 255, 0.85);
       border: 1px dashed #ff8fa3;
-      border-radius: 18px;
-      padding: 12px;
+      border-radius: 14px;
+      padding: 10px 12px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      margin-bottom: 14px;
+      gap: 6px;
+      margin-bottom: 10px;
     }
 
-    .itinerary-line {
+    .receipt-row {
       display: flex;
       justify-content: space-between;
-      font-size: 12.5px;
-      padding-bottom: 6px;
+      font-size: 11.5px;
+      padding-bottom: 4px;
       border-bottom: 1px solid #ffe1e8;
     }
 
-    .itinerary-line:last-child {
+    .receipt-row:last-child {
       border-bottom: none;
       padding-bottom: 0;
     }
 
-    .itinerary-line .label {
-      color: var(--text-muted);
+    .receipt-row .label {
+      color: var(--text-sub);
     }
 
-    .itinerary-line .value {
-      color: var(--primary);
+    .receipt-row .val {
+      color: var(--hot-pink);
       font-weight: 700;
+      text-align: right;
     }
 
     .hidden {
@@ -274,142 +284,126 @@
 </head>
 <body>
 
-  <!-- Background Hearts -->
   <div class="sky-hearts" id="skyHearts"></div>
 
-  <div class="heart-stage">
-    <!-- SVG Vector Heart Shape Background -->
-    <svg class="heart-frame" viewBox="0 0 500 470">
-      <defs>
-        <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#ffffff" />
-          <stop offset="60%" stop-color="#fff2f6" />
-          <stop offset="100%" stop-color="#ffd5e2" />
-        </linearGradient>
-      </defs>
-      <path d="M 250,110 
-               C 225,40 130,20 65,85 
-               C 0,150 15,260 250,440 
-               C 485,260 500,150 435,85 
-               C 370,20 275,40 250,110 Z"
-            fill="url(#heartGradient)" 
-            stroke="#ffffff" 
-            stroke-width="7" />
-    </svg>
+  <div class="heart-container">
+    <div class="heart-shape-card">
+      
+      <!-- Screen 1: Proposal Gate -->
+      <div class="card-content" id="screenProposal">
+        <div class="badge">🌸 EXCLUSIVE INVITATION</div>
+        <h1>Will You Go On A Date With Me?</h1>
+        <p class="subtitle">I've planned something very special, but it's incomplete without you.</p>
 
-    <!-- 1. Proposal Screen -->
-    <div class="inner-content" id="screenProposal">
-      <div class="pill-badge">🌸 EXCLUSIVE INVITATION</div>
-      <h1>Will You Go On A Date With Me?</h1>
-      <p class="lead-text">I've got something memorable in mind, but it only works if you're there.</p>
-
-      <div class="btn-lane">
-        <button class="btn-choice btn-yes" id="yesBtn" onclick="acceptInvitation(event)">Yes, absolutely! 💖</button>
-        <button class="btn-choice btn-no" id="noBtn" onmouseover="flyNo()" onclick="flyNo()">No 🙈</button>
+        <div class="btn-wrap">
+          <button class="btn-act btn-yes" id="yesBtn" onclick="onAccept(event)">Yes, absolutely! 💖</button>
+          <button class="btn-act btn-no" id="noBtn" onmouseover="dodgeNo()" onclick="dodgeNo()">No 🙈</button>
+        </div>
       </div>
-    </div>
 
-    <!-- 2. 3 Crazy Questions Screen -->
-    <div class="inner-content hidden" id="screenQuiz">
-      <div class="pill-badge" id="stepPill">QUESTION 01 OF 03</div>
-      <h1 id="quizQuestion" style="font-size: 20px; min-height: 48px; display:flex; align-items:center;">Loading...</h1>
+      <!-- Screen 2: 3 Questions (Zero-Scroll 2x2 Grid) -->
+      <div class="card-content hidden" id="screenQuiz">
+        <div class="badge" id="stepPill">QUESTION 01 OF 03</div>
+        <h1 id="quizQuestion" style="font-size: 18px; min-height: 44px; display:flex; align-items:center;">Loading...</h1>
 
-      <div id="quizContainer" style="width: 100%;"></div>
-    </div>
+        <div id="quizContainer" style="width: 100%;"></div>
+      </div>
 
-    <!-- 3. Final Screen: Ready to go -->
-    <div class="inner-content hidden" id="screenFinal">
-      <div class="pill-badge">💌 IT'S A MATCH</div>
-      <h1 style="font-size: 22px;">I am Ready to Go! 🎉</h1>
-      <p class="lead-text" style="margin-bottom: 12px;">Here is what we're doing:</p>
+      <!-- Screen 3: Date Confirmed -->
+      <div class="card-content hidden" id="screenFinal">
+        <div class="badge">💌 IT'S A MATCH</div>
+        <h1 style="font-size: 20px;">I am Ready to Go! 🎉</h1>
+        <p class="subtitle" style="margin-bottom: 8px;">Here is our date plan:</p>
 
-      <div class="itinerary-box" id="itineraryView"></div>
+        <div class="final-receipt" id="receiptBox"></div>
 
-      <button class="btn-choice btn-yes" style="width: 100%; font-size: 14px;" onclick="redirectWhatsApp()">
-        Send to WhatsApp Now 💬
-      </button>
-      <p style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">Auto-opening WhatsApp... 🚀</p>
+        <button class="btn-act btn-yes" style="width: 100%; font-size: 13px; padding: 11px 16px;" onclick="redirectWhatsApp()">
+          Confirm on WhatsApp 💬
+        </button>
+        <p style="font-size: 10px; color: var(--text-sub); margin-top: 6px;">Opening WhatsApp automatically... 🚀</p>
+      </div>
+
     </div>
   </div>
 
   <script>
     // ================= CONFIGURATION =================
-    // Apna 10-digit WhatsApp number dalein country code ke sath (Bina '+' sign ke)
+    // Apna 10-digit mobile number country code ke sath likhein (Bina '+' sign ke)
     const YOUR_PHONE_NUMBER = "91XXXXXXXXXX"; 
     // =================================================
 
-    // Continuous floating hearts generator
+    // Continuous floating hearts
     const skyHearts = document.getElementById('skyHearts');
-    const heartSymbols = ['💖', '💕', '💗', '🌸', '✨', '💓', '💘'];
+    const heartIcons = ['💖', '💕', '💗', '🌸', '✨', '💓', '💘'];
 
-    function generateDriftingHeart() {
-      const h = document.createElement('span');
-      h.className = 'drifting-heart';
-      h.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
-      h.style.left = Math.random() * 100 + 'vw';
-      h.style.fontSize = (Math.random() * 14 + 14) + 'px';
-      h.style.animationDuration = (Math.random() * 3 + 4.5) + 's';
-      skyHearts.appendChild(h);
-      setTimeout(() => h.remove(), 7000);
+    function spawnHeart() {
+      const el = document.createElement('span');
+      el.className = 'heart-fly';
+      el.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.fontSize = (Math.random() * 12 + 14) + 'px';
+      el.style.animationDuration = (Math.random() * 2 + 4.5) + 's';
+      skyHearts.appendChild(el);
+      setTimeout(() => el.remove(), 6000);
     }
-    setInterval(generateDriftingHeart, 300);
+    setInterval(spawnHeart, 300);
 
-    // Blast hearts upon clicking any button
-    function explodeHeartBurst(x, y) {
+    // Heart explosion on click
+    function heartBlast(x, y) {
       confetti({
-        particleCount: 50,
-        spread: 80,
+        particleCount: 45,
+        spread: 75,
         origin: { 
           x: x ? x / window.innerWidth : 0.5, 
-          y: y ? y / window.innerHeight : 0.6 
+          y: y ? y / window.innerHeight : 0.55 
         },
-        colors: ['#ff1e56', '#ff8fa3', '#ffffff', '#ff4d6d'],
+        colors: ['#ff1358', '#ff758c', '#ffffff', '#ff9ebb'],
         shapes: ['circle'],
-        scalar: 1.2
+        scalar: 1.1
       });
     }
 
-    // Playful "No" dodge
+    // Playful "No" Dodge
     const noBtn = document.getElementById('noBtn');
-    function flyNo() {
-      const randX = (Math.random() - 0.5) * 140;
-      const randY = (Math.random() - 0.5) * 80;
-      noBtn.style.transform = `translate(${randX}px, ${randY}px)`;
+    function dodgeNo() {
+      const x = (Math.random() - 0.5) * 120;
+      const y = (Math.random() - 0.5) * 60;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
     }
 
-    // 3 Crazy English Questions
+    // 3 Exact English Questions (Compact Grid Data)
     const questions = [
       {
-        type: "choice",
-        title: "Where should we escape to?",
+        type: "grid",
+        title: "Where should we go?",
         options: [
-          { text: "Rooftop under neon city stars", icon: "🌃" },
-          { text: "Aesthetic café with cozy corners", icon: "☕" },
-          { text: "Peaceful beach & cold night breeze", icon: "🌊" },
-          { text: "Wild theme park rides & games", icon: "🎡" }
+          { text: "Rooftop Under Stars", icon: "🌃" },
+          { text: "Aesthetic Cozy Café", icon: "☕" },
+          { text: "Peaceful Beach Walk", icon: "🌊" },
+          { text: "Fun Theme Park", icon: "🎡" }
         ]
       },
       {
         type: "time",
-        title: "What exact time should I pick you up?",
+        title: "What time should we meet?",
       },
       {
-        type: "choice",
-        title: "What delicious treat are we eating?",
+        type: "grid",
+        title: "What are we eating?",
         options: [
-          { text: "Cheesy artisan pizza & pasta feast", icon: "🍕" },
-          { text: "Steaming hot handmade dim sums & ramen", icon: "🍜" },
-          { text: "Spicy & crunchy street food tour", icon: "🌮" },
-          { text: "Overloaded dessert waffles & ice cream", icon: "🍨" }
+          { text: "Pizza & Creamy Pasta", icon: "🍕" },
+          { text: "Hot Dim Sums & Ramen", icon: "🍜" },
+          { text: "Street Food Tour", icon: "🌮" },
+          { text: "Waffles & Brownies", icon: "🍨" }
         ]
       }
     ];
 
     let currentQ = 0;
-    const userAnswers = [];
+    const userChoices = [];
 
-    function acceptInvitation(e) {
-      explodeHeartBurst(e?.clientX, e?.clientY);
+    function onAccept(e) {
+      heartBlast(e?.clientX, e?.clientY);
       document.getElementById('screenProposal').classList.add('hidden');
       document.getElementById('screenQuiz').classList.remove('hidden');
       renderQuestion();
@@ -423,79 +417,75 @@
       const container = document.getElementById('quizContainer');
       container.innerHTML = '';
 
-      if (q.type === "choice") {
-        const stack = document.createElement('div');
-        stack.className = 'crazy-options';
+      if (q.type === "grid") {
+        const grid = document.createElement('div');
+        grid.className = 'zero-scroll-grid';
         q.options.forEach(opt => {
-          const card = document.createElement('div');
-          card.className = 'crazy-card';
-          card.innerHTML = `<span class="emoji">${opt.icon}</span><span>${opt.text}</span>`;
-          card.onclick = (e) => {
-            explodeHeartBurst(e.clientX, e.clientY);
-            saveChoice(q.title, opt.text);
+          const item = document.createElement('div');
+          item.className = 'grid-card';
+          item.innerHTML = `<span class="icon">${opt.icon}</span><span class="title">${opt.text}</span>`;
+          item.onclick = (e) => {
+            heartBlast(e.clientX, e.clientY);
+            saveAnswer(q.title, opt.text);
           };
-          stack.appendChild(card);
+          grid.appendChild(item);
         });
-        container.appendChild(stack);
+        container.appendChild(grid);
       } else if (q.type === "time") {
-        const deck = document.createElement('div');
-        deck.className = 'time-deck';
-        deck.innerHTML = `
-          <input type="time" id="timePick" class="time-slot-input" value="19:30" required />
-          <button class="btn-choice btn-yes" onclick="submitTime(event)">Lock In Time ⏰</button>
+        const box = document.createElement('div');
+        box.className = 'time-compact-box';
+        box.innerHTML = `
+          <input type="time" id="exactTime" class="time-slot-input" value="19:30" required />
+          <button class="btn-act btn-yes" style="width: 85%; padding: 10px;" onclick="confirmTime(event)">Lock In Time ⏰</button>
         `;
-        container.appendChild(deck);
+        container.appendChild(box);
       }
     }
 
-    function submitTime(e) {
-      const val = document.getElementById('timePick').value;
+    function confirmTime(e) {
+      const val = document.getElementById('exactTime').value;
       if (!val) return;
 
-      explodeHeartBurst(e.clientX, e.clientY);
+      heartBlast(e.clientX, e.clientY);
       const [h, m] = val.split(':');
       const hourNum = parseInt(h, 10);
       const ampm = hourNum >= 12 ? 'PM' : 'AM';
       const formatted = `${hourNum % 12 || 12}:${m} ${ampm}`;
-      saveChoice("Meeting Time", formatted);
+      saveAnswer("Meeting Time", formatted);
     }
 
-    function saveChoice(question, choice) {
-      userAnswers.push({ question, choice });
+    function saveAnswer(question, choice) {
+      userChoices.push({ question, choice });
       currentQ++;
 
       if (currentQ < questions.length) {
         setTimeout(renderQuestion, 200);
       } else {
-        setTimeout(showFinalScreen, 200);
+        setTimeout(showFinal, 200);
       }
     }
 
-    function showFinalScreen() {
+    function showFinal() {
       document.getElementById('screenQuiz').classList.add('hidden');
       document.getElementById('screenFinal').classList.remove('hidden');
 
-      confetti({
-        particleCount: 150,
-        spread: 100,
-        origin: { y: 0.55 }
+      confetti({ particleCount: 130, spread: 90, origin: { y: 0.55 } });
+
+      const box = document.getElementById('receiptBox');
+      box.innerHTML = '';
+      userChoices.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'receipt-row';
+        row.innerHTML = `<span class="label">${item.question}</span><span class="val">${item.choice}</span>`;
+        box.appendChild(row);
       });
 
-      const view = document.getElementById('itineraryView');
-      view.innerHTML = '';
-      userAnswers.forEach(ans => {
-        const line = document.createElement('div');
-        line.className = 'itinerary-line';
-        line.innerHTML = `<span class="label">${ans.question}</span><span class="value">${ans.choice}</span>`;
-        view.appendChild(line);
-      });
-
-      // 1.5 Seconds me direct WhatsApp trigger
-      setTimeout(redirectWhatsApp, 1500);
+      // 1.2 second baad automatic WhatsApp open
+      setTimeout(redirectWhatsApp, 1200);
     }
 
     function redirectWhatsApp() {
-      const msg = `Hey! I said YES, I am ready to go! 🥰✨%0A%0AHere are my choices:%0A📍 Location: ${userAnswers[0]?.choice}%0A⏰ Time: ${userAnswers[1]?.choice}%0A🍕 Food: ${userAnswers[2]?.choice}%0A%0ACan't wait! 💖`;
+      const msg = `Hey! I said YES, I am ready to go! 🥰✨%0A%0AHere are my choices:%0A📍 Location: ${userChoices[0]?.choice}%0A⏰ Time: ${userChoices[1]?.choice}%0A🍕 Food: ${userChoices[2]?.choice}%0A%0ACan't wait! 💖`;
       window.location.href = `https://wa.me/${YOUR_PHONE_NUMBER}?text=${msg}`;
     }
   </script>

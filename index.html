@@ -3,475 +3,453 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to Girls Proposal</title>
-  <!-- Confetti script -->
+  <title>A Special Proposal ✨</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #ff407d;
-      --secondary: #ffcad4;
-      --accent: #ff0054;
-      --bg-gradient: linear-gradient(135deg, #fff0f3 0%, #ffccd5 50%, #ffe5ec 100%);
-      --card-bg: rgba(255, 255, 255, 0.88);
+      --primary: #ff2d60;
+      --secondary: #ff758c;
+      --accent: #7928ca;
+      --card-bg: rgba(255, 255, 255, 0.75);
+      --border-glow: rgba(255, 255, 255, 0.85);
+      --text-dark: #20101b;
+      --text-muted: #6b5c68;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
     body {
       min-height: 100vh;
-      background: var(--bg-gradient);
+      background: radial-gradient(circle at 10% 20%, #ffeef2 0%, #fed6e3 40%, #ffbee3 90%);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       overflow-x: hidden;
       position: relative;
-      padding: 20px;
+      padding: 24px;
     }
 
-    /* Floating Hearts Background */
-    .heart-bg {
+    /* Subtle ambient light orbs */
+    .orb {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    .orb-1 { width: 320px; height: 320px; background: #ff4d6d; top: -50px; left: -50px; }
+    .orb-2 { width: 350px; height: 350px; background: #7928ca; bottom: -80px; right: -80px; }
+
+    /* Floating hearts canvas */
+    .heart-layer {
+      position: fixed;
+      inset: 0;
       pointer-events: none;
       z-index: 0;
       overflow: hidden;
     }
 
-    .floating-heart {
+    .floating-item {
       position: absolute;
-      color: rgba(255, 64, 125, 0.45);
-      animation: floatUp 7s linear infinite;
-      bottom: -40px;
+      bottom: -50px;
+      animation: rise 8s infinite linear;
+      font-size: 20px;
+      user-select: none;
     }
 
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0) scale(0.6) rotate(0deg);
-        opacity: 0.8;
-      }
-      100% {
-        transform: translateY(-110vh) scale(1.3) rotate(360deg);
-        opacity: 0;
-      }
+    @keyframes rise {
+      0% { transform: translateY(0) scale(0.6) rotate(0deg); opacity: 0; }
+      20% { opacity: 0.7; }
+      80% { opacity: 0.7; }
+      100% { transform: translateY(-115vh) scale(1.2) rotate(360deg); opacity: 0; }
     }
 
-    /* Container Card */
+    /* Glassmorphism Card */
     .card {
       position: relative;
       z-index: 1;
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 2px solid rgba(255, 255, 255, 0.8);
-      border-radius: 28px;
-      box-shadow: 0 20px 45px rgba(255, 64, 125, 0.2);
-      max-width: 520px;
       width: 100%;
-      padding: 35px 25px;
+      max-width: 500px;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.5px solid var(--border-glow);
+      border-radius: 32px;
+      padding: 40px 32px;
+      box-shadow: 0 25px 50px -12px rgba(255, 45, 96, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
       text-align: center;
-      animation: fadeIn 0.8s ease-out;
+      transition: all 0.4s ease;
+      animation: smoothEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes smoothEntrance {
+      from { opacity: 0; transform: translateY(25px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* Logo Header */
-    .logo-badge {
-      width: 70px;
-      height: 70px;
-      background: linear-gradient(135deg, #ff407d, #ff0054);
-      border-radius: 50%;
+    .badge-pill {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      box-shadow: 0 8px 20px rgba(255, 0, 84, 0.35);
-      margin-bottom: 12px;
-      animation: pulse 2s infinite ease-in-out;
-    }
-
-    .logo-badge svg {
-      width: 38px;
-      height: 38px;
-      fill: #ffffff;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-    }
-
-    .subtitle-badge {
-      display: inline-block;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
+      gap: 6px;
+      background: rgba(255, 45, 96, 0.08);
+      color: var(--primary);
+      padding: 6px 14px;
+      border-radius: 50px;
       font-size: 11px;
       font-weight: 700;
-      color: var(--accent);
-      background: #ffe5ec;
-      padding: 5px 14px;
-      border-radius: 30px;
-      margin-bottom: 12px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      border: 1px solid rgba(255, 45, 96, 0.15);
     }
 
     h1 {
-      color: #3a0ca3;
-      color: #c9184a;
-      font-size: 24px;
-      font-weight: 800;
-      margin-bottom: 8px;
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+      line-height: 1.25;
     }
 
-    p.lead-text {
-      color: #555;
-      font-size: 14px;
-      margin-bottom: 25px;
-      line-height: 1.5;
+    p.lead {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 30px;
     }
 
-    /* Buttons & Arrow for Screen 1 */
-    .btn-container {
-      position: relative;
+    /* Interactive Buttons */
+    .btn-wrap {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 25px;
-      margin-top: 20px;
-      min-height: 90px;
+      gap: 16px;
+      position: relative;
+      min-height: 60px;
     }
 
     .btn {
-      padding: 13px 32px;
-      border-radius: 50px;
+      padding: 14px 34px;
+      border-radius: 20px;
       font-size: 16px;
       font-weight: 700;
       border: none;
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
       position: relative;
     }
 
     .btn-yes {
-      background: linear-gradient(135deg, #ff407d, #ff0054);
-      color: white;
-      box-shadow: 0 8px 20px rgba(255, 0, 84, 0.4);
+      background: linear-gradient(135deg, #ff2d60 0%, #e0004d 100%);
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(255, 45, 96, 0.4);
     }
 
-    .btn-yes.highlight {
-      transform: scale(1.15);
-      box-shadow: 0 0 25px rgba(255, 0, 84, 0.7);
+    .btn-yes:hover {
+      transform: scale(1.05);
+      box-shadow: 0 14px 30px rgba(255, 45, 96, 0.5);
     }
 
     .btn-no {
-      background: #f8f9fa;
-      color: #6c757d;
-      border: 1.5px solid #dee2e6;
+      background: rgba(255, 255, 255, 0.85);
+      color: var(--text-muted);
+      border: 1px solid #ffd1dc;
     }
 
-    /* Arrow pointing to YES */
-    .arrow-pointer {
-      display: none;
-      position: absolute;
-      top: -30px;
-      color: var(--accent);
-      font-size: 22px;
-      font-weight: 800;
-      animation: bounceArrow 0.6s infinite alternate;
-    }
-
-    @keyframes bounceArrow {
-      from { transform: translateY(0); }
-      to { transform: translateY(-8px); }
-    }
-
-    /* Questions Screen */
-    .screen-hidden {
-      display: none !important;
-    }
-
-    .progress-bar-container {
+    /* Progress Tracker */
+    .progress-track {
       width: 100%;
-      height: 8px;
-      background: #ffe5ec;
-      border-radius: 20px;
-      margin-bottom: 18px;
+      height: 6px;
+      background: rgba(255, 45, 96, 0.1);
+      border-radius: 10px;
       overflow: hidden;
+      margin-bottom: 22px;
     }
 
-    .progress-bar {
+    .progress-fill {
       height: 100%;
       width: 5%;
-      background: linear-gradient(90deg, #ff407d, #ff0054);
-      transition: width 0.3s ease;
+      background: linear-gradient(90deg, #ff2d60, #7928ca);
+      border-radius: 10px;
+      transition: width 0.35s ease;
     }
 
-    .step-counter {
+    .step-label {
       font-size: 12px;
       font-weight: 700;
       color: var(--primary);
-      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
     }
 
-    .question-title {
-      font-size: 19px;
-      color: #590d22;
-      margin-bottom: 20px;
-      min-height: 48px;
+    .question-head {
+      font-family: 'Playfair Display', serif;
+      font-size: 21px;
+      color: var(--text-dark);
+      margin-bottom: 24px;
+      min-height: 55px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .options-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-
-    .opt-btn {
-      background: #ffffff;
-      border: 1.5px solid #ffccd5;
-      padding: 13px 18px;
-      border-radius: 16px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #4a4a4a;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.2s ease;
+    .choice-stack {
       display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .opt-btn:hover {
-      background: #fff0f3;
-      border-color: #ff407d;
-      color: #ff0054;
-      transform: translateX(4px);
-    }
-
-    /* Final Summary Receipt */
-    .summary-list {
-      max-height: 280px;
-      overflow-y: auto;
-      text-align: left;
-      background: #fff8f9;
-      padding: 14px;
-      border-radius: 16px;
-      border: 1px dashed #ffb3c1;
-      margin: 18px 0;
-      font-size: 13px;
-    }
-
-    .summary-item {
-      padding: 7px 0;
-      border-bottom: 1px solid #ffe5ec;
-      display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       gap: 12px;
     }
 
-    .summary-item span:first-child {
-      color: #777;
-      font-weight: 500;
+    .choice-card {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.5px solid rgba(255, 255, 255, 0.95);
+      padding: 16px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-dark);
+      text-align: left;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+      transition: all 0.25s ease;
     }
 
-    .summary-item span:last-child {
-      color: #ff0054;
+    .choice-card:hover {
+      background: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 45, 96, 0.15);
+      color: var(--primary);
+    }
+
+    .choice-card .bullet-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--secondary);
+      flex-shrink: 0;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .choice-card:hover .bullet-dot {
+      transform: scale(1.6);
+      background: var(--primary);
+    }
+
+    /* Final Summary Board */
+    .itinerary-scroll {
+      max-height: 290px;
+      overflow-y: auto;
+      padding-right: 6px;
+      margin: 20px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .itinerary-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .itinerary-scroll::-webkit-scrollbar-thumb {
+      background: #ffccd5;
+      border-radius: 4px;
+    }
+
+    .itinerary-row {
+      background: #ffffff;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1px solid #ffe5ec;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .itinerary-row .q-text {
+      color: var(--text-muted);
+      font-weight: 500;
+      text-align: left;
+    }
+
+    .itinerary-row .ans-text {
+      color: var(--primary);
       font-weight: 700;
       text-align: right;
+    }
+
+    .hidden {
+      display: none !important;
     }
   </style>
 </head>
 <body>
 
-  <!-- Floating Hearts Background Container -->
-  <div class="heart-bg" id="heartBg"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="heart-layer" id="heartLayer"></div>
 
-  <!-- Main Proposal Card -->
-  <div class="card" id="proposalCard">
-    <div class="logo-badge">
-      <svg viewBox="0 0 24 24">
-        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-      </svg>
-    </div>
-    
-    <div class="subtitle-badge">Welcome to Girls Proposal</div>
-    <h1>Will You Be Mine? 💖</h1>
-    <p class="lead-text">Zindagi ke har safar ko tumhare saath khubsurat banana chahta hoon. Ek simple sawal hai tumhare liye...</p>
+  <!-- Screen 1: The Proposal -->
+  <div class="card" id="cardProposal">
+    <div class="badge-pill">✨ Handcrafted Invitation</div>
+    <h1>Will You Go Out With Me?</h1>
+    <p class="lead">Every beautiful journey begins with a small step. I would love to make this one truly unforgettable with you.</p>
 
-    <div class="btn-container">
-      <div id="arrowNotice" class="arrow-pointer">👉 Idhar Click Karo! 💕</div>
-      <button class="btn btn-yes" id="yesBtn" onclick="acceptProposal()">Yes! 🥰</button>
-      <button class="btn btn-no" id="noBtn" onmouseover="handleNoInterference()" onclick="handleNoInterference()">No 🥺</button>
+    <div class="btn-wrap">
+      <button class="btn btn-yes" id="yesBtn" onclick="onAccept()">Yes, I'd love to! 💖</button>
+      <button class="btn btn-no" id="noBtn" onmouseover="dodgeNo()" onclick="dodgeNo()">No 🙈</button>
     </div>
   </div>
 
-  <!-- 20 Questions Planner Card -->
-  <div class="card screen-hidden" id="plannerCard">
-    <div class="progress-bar-container">
-      <div class="progress-bar" id="progressBar"></div>
+  <!-- Screen 2: 20 Curated Questions -->
+  <div class="card hidden" id="cardQuestions">
+    <div class="progress-track">
+      <div class="progress-fill" id="progressBar"></div>
     </div>
-    <div class="step-counter" id="stepCounter">Question 1 of 20</div>
-    <h2 class="question-title" id="questionTitle">Loading...</h2>
+    <div class="step-label" id="stepCounter">Question 01 of 20</div>
+    <h2 class="question-head" id="questionPrompt">Loading...</h2>
     
-    <div class="options-grid" id="optionsContainer"></div>
+    <div class="choice-stack" id="choicesBox"></div>
   </div>
 
-  <!-- Final Success & Receipt Card -->
-  <div class="card screen-hidden" id="finalCard">
-    <div class="logo-badge">
-      <svg viewBox="0 0 24 24">
-        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-      </svg>
-    </div>
-    <div class="subtitle-badge">Date Confirmed! ✨</div>
-    <h1>It's A Perfect Date! 🎉❤️</h1>
-    <p class="lead-text">Tumhare saare favourite choices lock ho chuke hain:</p>
+  <!-- Screen 3: Final Aesthetic Itinerary -->
+  <div class="card hidden" id="cardResult">
+    <div class="badge-pill">💌 Date Confirmed</div>
+    <h1>It's a Match! 🎉</h1>
+    <p class="lead">Here is our handpicked itinerary, curated completely around your taste:</p>
 
-    <div class="summary-list" id="summaryList"></div>
-    <p style="font-size: 13px; color: #ff0054; font-weight: 600;">Main intezar karunga is khoobsurat din ka! 🌹</p>
+    <div class="itinerary-scroll" id="receiptBox"></div>
+    <p style="font-size: 13px; color: var(--primary); font-weight: 700; margin-top: 15px;">Looking forward to creating unforgettable memories with you! 🌹</p>
   </div>
 
   <script>
-    // 1. Generate Continuous Floating Hearts
-    const heartBg = document.getElementById('heartBg');
-    const heartIcons = ['❤️', '💖', '💕', '🌸', '✨'];
+    // 1. Ambient Sparkle & Float Generation
+    const heartLayer = document.getElementById('heartLayer');
+    const floatSymbols = ['🤍', '✨', '🌸', '💫', '💖'];
 
-    function createHeart() {
-      const heart = document.createElement('span');
-      heart.className = 'floating-heart';
-      heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.fontSize = (Math.random() * 18 + 14) + 'px';
-      heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
-      heartBg.appendChild(heart);
+    function dropFloatingElement() {
+      const el = document.createElement('span');
+      el.className = 'floating-item';
+      el.innerText = floatSymbols[Math.floor(Math.random() * floatSymbols.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.fontSize = (Math.random() * 14 + 14) + 'px';
+      el.style.animationDuration = (Math.random() * 4 + 6) + 's';
+      heartLayer.appendChild(el);
 
-      setTimeout(() => {
-        heart.remove();
-      }, 8000);
+      setTimeout(() => el.remove(), 9000);
     }
-    setInterval(createHeart, 350);
+    setInterval(dropFloatingElement, 400);
 
-    // 2. Proposal Screen: Pointer logic on "No"
-    const yesBtn = document.getElementById('yesBtn');
+    // 2. Playful Dodge for "No" Button
     const noBtn = document.getElementById('noBtn');
-    const arrowNotice = document.getElementById('arrowNotice');
-
-    function handleNoInterference() {
-      // Show pointer to YES button and enlarge YES
-      arrowNotice.style.display = 'block';
-      yesBtn.classList.add('highlight');
-      
-      // Slightly push NO button away
-      const moveX = (Math.random() - 0.5) * 60;
-      const moveY = (Math.random() - 0.5) * 60;
-      noBtn.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    function dodgeNo() {
+      const randomX = (Math.random() - 0.5) * 140;
+      const randomY = (Math.random() - 0.5) * 80;
+      noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
     }
 
-    // 3. 20 Detailed Date Questions Dataset
-    const dateQuestions = [
-      { q: "Pehle kahan chalna pasand karogi?", opt: ["Romantic Luxury Hotel / Cafe", "Peaceful Beach Sunset", "Rooftop Restaurant Under Stars", "Quiet Hilltop View"] },
-      { q: "Kab milna sabse best rahega?", opt: ["Early Morning Coffee time", "Lazy Weekend Lunch", "Romantic Candlelight Dinner", "Late-Night Drive & Ice cream"] },
-      { q: "Hamara primary cuisine / khana kya hona chahiye?", opt: ["Italian (Pizza & Pasta)", "Authentic Indian Royal Food", "Asian / Sushi / Noodles", "Street Food & Chatpatta Tour"] },
-      { q: "Hotel / Cafe mein baithne ki jagah kaisi ho?", opt: ["Glass Window City View", "Candlelit Cozy Corner Table", "Open Terrace with Breeze", "Private Dining Cabin"] },
-      { q: "Starters ya snacks mein pehle kya mangaayein?", opt: ["Crispy Fries & Nachos", "Cheese Garlic Bread", "Paneer / Chicken Tikka", "Momos & Dips"] },
-      { q: "Drink mein kya prefer karogi?", opt: ["Hot Cappuccino / Latte", "Chilled Mocktail / Mojito", "Thick Chocolate Shake", "Fresh Strawberry Smoothie"] },
-      { q: "Dessert (Meethe) mein kya khayenge?", opt: ["Warm Chocolate Sizzler Brownie", "Red Velvet Pastry", "Belgian Waffles with Nutella", "Classic Gulab Jamun & Ice Cream"] },
-      { q: "Tumhe aate waqt kaun sa flower pasand aayega?", opt: ["Classic Red Roses", "Cute Pink Lilies", "Bright Sunflowers", "White Orchid Bouquet"] },
-      { q: "Hamaari travel ride kaisi honi chahiye?", opt: ["Long Drive in Car with Slow Music", "Chilled Bike Ride with Breeze", "Cab & Relaxed Talk", "Walk Holding Hands"] },
-      { q: "Background mein kaisa music chalna chahiye?", opt: ["Bollywood Romantic Melodies", "Slow Arijit Singh Acoustic", "Lo-Fi Aesthetic Beats", "English Pop / Taylor Swift Vibes"] },
-      { q: "Date outfit ka color theme kya rakhein?", opt: ["Matching Black Outfits", "Cute Soft Pastel / Pink Shades", "Royal White & Blue", "Casual & Trendy Denim"] },
-      { q: "Khane ke baad hamara next plan kya ho?", opt: ["Long Walk under Street Lights", "Amusement Park / Arcades", "Movie / Cinepolis Night", "Lake / River Side Sitting"] },
-      { q: "Hamare beech conversation ka main topic kya rahe?", opt: ["Bachpan ke funny kisse", "Deep Life Goals & Dreams", "Horror & Ghost Stories", "Pyaar aur future ke plans"] },
-      { q: "Yaadein capture karne ke liye kya zaroori hai?", opt: ["Bohat saari Cute Candid Photos", "Ek aesthetic Short Vlog / Reel", "Instant Polaroid Snaps", "Bina phone ke live the moment"] },
-      { q: "Ek cute surprise gift mein kya chahti ho?", opt: ["Handwritten Love Letter", "Cute Teddy Bear", "Chocolates & Accessories Box", "Customized Couple Bracelet"] },
-      { q: "Agar baarish shuru ho jaye toh?", opt: ["Baarish mein bheeg kar nachna", "Ek hi umbrella mein walk", "Car ke andar baith kar chai pina", "Cafe ke andar coffee sip karna"] },
-      { q: "Late night ice-cream ka favourite flavour?", opt: ["Belgian Dark Chocolate", "Butterscotch Crunch", "Wild Berry / Strawberry", "Cotton Candy"] },
-      { q: "Hamaari date ka rule kya hona chahiye?", opt: ["Zero phone checks allowed", "Sirf hasna aur treat enjoy karna", "Sach bolna and open heart talks", "Jo tum bologi wahi final hoga"] },
-      { q: "Date end hone ke baad good-bye kaisa ho?", opt: ["Warm Tight Hug", "Forehead Kiss & Smile", "Holding hands till parting", "Promise of next date soon"] },
-      { q: "Sabse important: Next date kitni jaldi plan karein?", opt: ["Agla weekend pakka!", "Kal hi dobara milte hain!", "Every week ek date fix", "Jab tum bolo main hazir!"] }
+    // 3. 20 Full English Questions
+    const questions = [
+      { q: "Where should our dream setting be?", opts: ["Chic Rooftop with a Skyline View", "Cozy Corner in a Vintage Café", "Quiet Sunset by the Waves", "Lush Botanical Garden Picnic"] },
+      { q: "What is your favorite time to meet?", opts: ["Misty Morning Coffee", "Lazy Sunny Brunch", "Candlelit Evening Dinner", "Late-Night Starlight Drive"] },
+      { q: "What cuisine are we savoring together?", opts: ["Artisanal Italian Pizza & Pasta", "Rich Authentic Continental", "Spicy Asian Noodles & Dumplings", "Vibrant Street Gourmet Food"] },
+      { q: "What kind of table vibe do you prefer?", opts: ["Next to a Panoramic Glass Window", "Private Dimly Lit Cozy Booth", "Open Sky Terrace with a Breeze", "Garden Patio with Fairy Lights"] },
+      { q: "What should we nibble on first?", opts: ["Crisp Truffle Fries & Dips", "Garlic Herb Bread with Melted Cheese", "Spiced Skewers & Gourmet Sliders", "Steaming Handmade Dumplings"] },
+      { q: "What will be filling your glass?", opts: ["Artisan Roast Latte / Cappuccino", "Chilled Berry Mojito / Mocktail", "Decadent Belgium Chocolate Shake", "Fresh Sparkling Peach Iced Tea"] },
+      { q: "Which sweet treat completes the meal?", opts: ["Sizzling Brownie with Vanilla Cream", "Classic New York Cheesecake", "Warm Belgian Waffles with Nutella", "Handcrafted Gelato & Macarons"] },
+      { q: "Which flowers brighten your day the most?", opts: ["Classic Deep Red Roses", "Soft Pastel Pink Lilies", "Radiant Happy Sunflowers", "Minimal White Orchids"] },
+      { q: "How are we traveling to our spot?", opts: ["Long Scenic Drive with Soft Tunes", "Fun Breezy Ride", "Relaxed Chauffeur-Driven Ride", "Romantic Walk Under Streetlamps"] },
+      { q: "What vibe should our playlist carry?", opts: ["Heartwarming Acoustic Melodies", "Dreamy Lo-Fi Instrumental Beats", "Classic Romantic Pop Hits", "Soulful Modern Indie Ballads"] },
+      { q: "What dress code theme fits us best?", opts: ["Timeless All-Black Elegance", "Soft Aesthetic Pastel Palette", "Smart Casual White & Denim", "Chic Semi-Formal Evening Wear"] },
+      { q: "What do we do right after dinner?", opts: ["A peaceful stroll holding hands", "Fun arcade games and laughter", "A quiet spot to watch the city lights", "Grab dessert at a 24/7 drive-thru"] },
+      { q: "What should our talks revolve around?", opts: ["Hilarious childhood memories", "Wild dreams and deep aspirations", "Favorite movies and music tastes", "Raw, honest feelings and life"] },
+      { q: "How should we preserve our memory?", opts: ["Cute candid smartphone portraits", "Vintage instant Polaroid prints", "A tiny aesthetic video reel", "Just living purely in the moment"] },
+      { q: "What little surprise touches your heart?", opts: ["A heartfelt handwritten note", "A box of rare gourmet chocolates", "A tiny sentimental souvenir", "A delicate handcrafted keepsake"] },
+      { q: "What if it suddenly starts pouring rain?", opts: ["Dance right through the downpour", "Share one single tiny umbrella", "Sit inside the car and watch droplets", "Watch the rain through a café window"] },
+      { q: "Your go-to late night ice cream pick?", opts: ["Rich Dark Belgian Chocolate", "Sweet Salted Caramel Crunch", "Fresh Strawberry Cream Swirl", "Warm Vanilla Bean with Fudge"] },
+      { q: "What golden rule guides our date?", opts: ["Phones kept entirely out of sight", "Unfiltered laughter and honest smiles", "Order whatever you secretly crave", "No rushing—let time stand still"] },
+      { q: "How do we bid farewell until next time?", opts: ["A long, warm, genuine hug", "A gentle kiss on the forehead", "Holding hands till stepping away", "Pinky-promising our next catchup"] },
+      { q: "Most importantly: when is date number two?", opts: ["Tomorrow itself!", "Next weekend for sure", "Every week, without fail", "Whenever you whisper the word"] }
     ];
 
-    let currentQIndex = 0;
-    const userAnswers = [];
+    let currentIndex = 0;
+    const recordedAnswers = [];
 
-    function acceptProposal() {
-      // Confetti burst
+    function onAccept() {
       confetti({
-        particleCount: 150,
-        spread: 80,
+        particleCount: 120,
+        spread: 70,
         origin: { y: 0.6 }
       });
-
-      document.getElementById('proposalCard').classList.add('screen-hidden');
-      document.getElementById('plannerCard').classList.remove('screen-hidden');
+      document.getElementById('cardProposal').classList.add('hidden');
+      document.getElementById('cardQuestions').classList.remove('hidden');
       renderQuestion();
     }
 
     function renderQuestion() {
-      const qData = dateQuestions[currentQIndex];
-      document.getElementById('stepCounter').innerText = `Question ${currentQIndex + 1} of ${dateQuestions.length}`;
-      document.getElementById('questionTitle').innerText = qData.q;
+      const activeData = questions[currentIndex];
       
-      const progressPercent = ((currentQIndex + 1) / dateQuestions.length) * 100;
+      document.getElementById('stepCounter').innerText = `Question ${String(currentIndex + 1).padStart(2, '0')} of ${questions.length}`;
+      document.getElementById('questionPrompt').innerText = activeData.q;
+      
+      const progressPercent = ((currentIndex + 1) / questions.length) * 100;
       document.getElementById('progressBar').style.width = progressPercent + '%';
 
-      const optionsContainer = document.getElementById('optionsContainer');
-      optionsContainer.innerHTML = '';
+      const container = document.getElementById('choicesBox');
+      container.innerHTML = '';
 
-      qData.opt.forEach(option => {
-        const btn = document.createElement('button');
-        btn.className = 'opt-btn';
-        btn.innerHTML = `<span>❤️</span> <span>${option}</span>`;
-        btn.onclick = () => selectOption(qData.q, option);
-        optionsContainer.appendChild(btn);
+      activeData.opts.forEach(optionText => {
+        const item = document.createElement('button');
+        item.className = 'choice-card';
+        item.innerHTML = `<span class="bullet-dot"></span><span>${optionText}</span>`;
+        item.onclick = () => saveAnswer(activeData.q, optionText);
+        container.appendChild(item);
       });
     }
 
-    function selectOption(question, selectedChoice) {
-      userAnswers.push({ question, choice: selectedChoice });
-      currentQIndex++;
+    function saveAnswer(question, choice) {
+      recordedAnswers.push({ question, choice });
+      currentIndex++;
 
-      if (currentQIndex < dateQuestions.length) {
+      if (currentIndex < questions.length) {
         renderQuestion();
       } else {
-        showFinalReceipt();
+        renderSummary();
       }
     }
 
-    function showFinalReceipt() {
-      document.getElementById('plannerCard').classList.add('screen-hidden');
-      document.getElementById('finalCard').classList.remove('screen-hidden');
+    function renderSummary() {
+      document.getElementById('cardQuestions').classList.add('hidden');
+      document.getElementById('cardResult').classList.remove('hidden');
 
       confetti({
-        particleCount: 200,
-        spread: 100,
-        origin: { y: 0.5 }
+        particleCount: 160,
+        spread: 90,
+        origin: { y: 0.55 }
       });
 
-      const summaryList = document.getElementById('summaryList');
-      summaryList.innerHTML = '';
+      const receiptBox = document.getElementById('receiptBox');
+      receiptBox.innerHTML = '';
 
-      userAnswers.forEach((ans, idx) => {
-        const item = document.createElement('div');
-        item.className = 'summary-item';
-        item.innerHTML = `
-          <span>#${idx + 1}. ${ans.question}</span>
-          <span>${ans.choice}</span>
+      recordedAnswers.forEach((entry, i) => {
+        const row = document.createElement('div');
+        row.className = 'itinerary-row';
+        row.innerHTML = `
+          <span class="q-text">#${i + 1}. ${entry.question}</span>
+          <span class="ans-text">${entry.choice}</span>
         `;
-        summaryList.appendChild(item);
+        receiptBox.appendChild(row);
       });
     }
   </script>
